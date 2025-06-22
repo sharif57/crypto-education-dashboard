@@ -9,7 +9,7 @@ const Header = () => {
   const navigate = useNavigate();
   const loacatin = useLocation();
   const notificationRef = useRef(null);
-  const [notificationPopup, setNotificationPopup] = useState(false);
+  const [, setNotificationPopup] = useState(false);
 
   const handleChange = (value) => {
     console.log(`selected ${value}`);
@@ -59,7 +59,7 @@ const Header = () => {
         </div>
         <div className="flex items-center">
           <div>
-            <img src={'/logo.png'} alt="" className="rounded-full h-[42px] w-[42px]" />
+            <img src={'/logo.png'} alt="" className="rounded-full  h-[42px] w-[42px]" />
           </div>
           <Select
             defaultValue="Jane Cooper"

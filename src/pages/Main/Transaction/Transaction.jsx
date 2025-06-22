@@ -1,8 +1,7 @@
 import { Table } from "antd";
-// import exlamIcon from "../assets/images/exclamation-circle.png";
-import exlamIcon from "../../../assets/images/exclamation-circle.png";
 import { useState } from "react";
 import DashboardModal from "../../../Components/DashboardModal";
+import { BsExclamation } from "react-icons/bs";
 // import DashboardModal from "./DashboardModal";
 
 const Transaction = () => {
@@ -44,9 +43,7 @@ const Transaction = () => {
       render: (_, data) => (
         <div className="  items-center justify-around textcenter flex ">
           {/* Review Icon */}
-          <img
-            src={exlamIcon}
-            alt=""
+          <BsExclamation
             className="btn  px-3 py-1 text-sm rounded-full cursor-pointer"
             onClick={() => showModal(data)}
           />
