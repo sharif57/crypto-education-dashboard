@@ -1,10 +1,10 @@
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import logo from "/logo.png";
-import logout from "../../assets/images/logout.png";
 import { createElement, useEffect, useState } from "react";
 import { routeLinkGenerators } from "../../utils/routeLinkGenerators";
 import { dashboardItems } from "../../constants/router.constants";
 import Swal from "sweetalert2";
+import { LogOut } from "lucide-react";
 
 
 const Sidebar = () => {
@@ -77,7 +77,7 @@ const Sidebar = () => {
             onClick={handleLogOut}
             className=" w-full bg-red text-black  font-semibold px-12 py-3 flex items-center justify-center gap-3 text-md outline-none rounded-full"
           >
-            <img className="" src={logout} alt="" />
+            <LogOut size={18} className="text-white" />
             <span className="text-white font-light">Logout</span>
           </button>
         </div>

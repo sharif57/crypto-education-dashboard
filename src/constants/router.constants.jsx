@@ -9,7 +9,6 @@ import PrivacyPolicy from "../pages/Settings/PrivacyPolicy";
 import EditPrivacyPolicy from "../pages/Settings/EditPrivacyPolicy";
 
 import { MdOutlineSecurityUpdateWarning } from "react-icons/md";
-import HostDetails from "../pages/Main/Host/HostDetails";
 import { FaServicestack } from "react-icons/fa6";
 import { BiMessageSquareDetail } from "react-icons/bi";
 import Setting from "../pages/Main/Setting/Setting";
@@ -100,10 +99,7 @@ export const dashboardItems = [
     icon: IoSettingsOutline,
     element: <Setting />,
   },
-  {
-    path: "/hosts/:id",
-    element: <HostDetails />,
-  },
+
   {
     name: "Settings",
     rootPath: "settings",

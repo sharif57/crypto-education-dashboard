@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Badge } from "antd";
-import profileImage from "../../assets/images/dash-profile.png";
 import { TbBellRinging } from "react-icons/tb";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { Select } from 'antd';
@@ -60,7 +59,7 @@ const Header = () => {
         </div>
         <div className="flex items-center">
           <div>
-            <img src={profileImage} alt="" className="rounded-full h-[42px] w-[42px]" />
+            <img src={'/logo.png'} alt="" className="rounded-full h-[42px] w-[42px]" />
           </div>
           <Select
             defaultValue="Jane Cooper"

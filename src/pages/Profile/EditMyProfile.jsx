@@ -1,13 +1,9 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button, Form, Input } from "antd";
-import dashProfile from "../../assets/images/dashboard-profile.png";
-// import "react-phone-number-input/style.css";
-// import PhoneInput from "react-phone-number-input";
-import { FiEdit } from "react-icons/fi";
+;
 import { useNavigate } from "react-router-dom";
 import PhoneCountryInput from "../../Components/PhoneCountryInput";
-import PageHeading from "../../Components/PageHeading";
-import { PiCameraPlus } from "react-icons/pi";
+
 import { FaAngleLeft } from "react-icons/fa6";
 
 const EditMyProfile = () => {
@@ -55,7 +51,7 @@ const EditMyProfile = () => {
                 <div className="min-h-[300px] flex flex-col items-center justify-center p-8 border border-black bg-lightGray/15">
                   <div className="my-2">
                     <img
-                      src={dashProfile}
+                      src={'/logo.png'}
                       alt=""
                       className="h-28 w-28 rounded-full border-4 border-black"
                     />

@@ -1,6 +1,5 @@
 import  { useState } from "react";
 import { Button, Form, Input } from "antd";
-import dashProfile from "../../assets/images/dashboard-profile.png";
 import { Outlet, useNavigate } from "react-router-dom";
 import PhoneCountryInput from "../../Components/PhoneCountryInput";
 import PasswordChangeModalForm from "../../Components/User/PasswordChangeModalForm";
@@ -16,7 +15,7 @@ const MyProfile = () => {
     name: "Jane Kooper",
     email: "enrique@gmail.com",
     phone: "+880 1550597212",
-    profile: dashProfile,
+    profile: '/logo.png',
   };
   // console.log(code);
   return (
@@ -61,7 +60,7 @@ const MyProfile = () => {
                   <div className="min-h-[300px] flex flex-col items-center justify-center p-8 border border-black bg-lightGray/15">
                     <div className="my-2">
                       <img
-                        src={dashProfile}
+                        src={'/logo.png'}
                         alt=""
                         className="h-28 w-28 rounded-full border-4 border-black"
                       />
