@@ -1,0 +1,254 @@
+// import { EllipsisVertical } from "lucide-react";
+// import { Link } from "react-router-dom";
+
+// export default function Video() {
+//   const videos = [
+//     {
+//       id: 1,
+//       title: "IntroductionSeason",
+//       count: "1 Document",
+//       type: "document",
+//       image: "/placeholder.svg?height=120&width=200",
+//     },
+//     {
+//       id: 2,
+//       title: "Crypto Basics",
+//       count: "27 Videos",
+//       type: "video",
+//       image: "/placeholder.svg?height=120&width=200",
+//     },
+//     {
+//       id: 3,
+//       title: "Crypto Basics",
+//       count: "27 Videos",
+//       type: "video",
+//       image: "/placeholder.svg?height=120&width=200",
+//     },
+//     {
+//       id: 4,
+//       title: "Crypto Basics",
+//       count: "27 Videos",
+//       type: "video",
+//       image: "/placeholder.svg?height=120&width=200",
+//     },
+//     {
+//       id: 5,
+//       title: "Crypto Basics",
+//       count: "27 Videos",
+//       type: "video",
+//       image: "/placeholder.svg?height=120&width=200",
+//     },
+//     {
+//       id: 6,
+//       title: "Crypto Basics",
+//       count: "27 Videos",
+//       type: "video",
+//       image: "/placeholder.svg?height=120&width=200",
+//     },
+//     {
+//       id: 7,
+//       title: "Crypto Basics",
+//       count: "27 Videos",
+//       type: "video",
+//       image: "/placeholder.svg?height=120&width=200",
+//     },
+//     {
+//       id: 8,
+//       title: "Crypto Basics",
+//       count: "27 Videos",
+//       type: "video",
+//       image: "/placeholder.svg?height=120&width=200",
+//     },
+//   ];
+//   return (
+//     <div>
+//       <div className="flex justify-end mb-8 items-end">
+//         <Link to={"/video/create-category"}>
+//           <button className="w-64 py-3 bg-[#62C1BF] hover:bg-[#62C1BF] text-black rounded-full mt-4 transition-colors">
+//             Create New Category
+//           </button>{" "}
+//         </Link>
+//       </div>
+//       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+//         {videos.map((video) => (
+//           <Link to={`/video/related-video`} key={video.id} className="bg-[#373737] rounded-lg p-4 ">
+//             <img
+//               className="bg-center w-full"
+//               src="/image.png"
+//               alt=""
+//             />
+
+//             <h1 className="text-[24px] text-[#F3F3F3] font-medium">
+//               {video.title}
+//             </h1>
+//             <div className="flex justify-between items-center">
+//               <p className="text-[#62C1BF] text-xl">{video.count}</p>
+//               <EllipsisVertical className="text-white" />
+//             </div>
+//           </Link>
+//         ))}
+//       </div>
+//     </div>
+//   );
+// }
+
+import { useState, useRef, useEffect } from "react";
+import { EllipsisVertical } from "lucide-react";
+import { Link } from "react-router-dom";
+
+export default function Video() {
+  const [videos, setVideos] = useState([
+    {
+      id: 1,
+      title: "Introduction Season",
+      count: "1 Document",
+      type: "document",
+      image: "/placeholder.svg?height=120&width=200",
+    },
+    {
+      id: 2,
+      title: "Crypto Basics",
+      count: "27 Videos",
+      type: "video",
+      image: "/placeholder.svg?height=120&width=200",
+    },
+    {
+      id: 3,
+      title: "Crypto Basics",
+      count: "27 Videos",
+      type: "video",
+      image: "/placeholder.svg?height=120&width=200",
+    },
+    {
+      id: 4,
+      title: "Crypto Basics",
+      count: "27 Videos",
+      type: "video",
+      image: "/placeholder.svg?height=120&width=200",
+    },
+    {
+      id: 5,
+      title: "Crypto Basics",
+      count: "27 Videos",
+      type: "video",
+      image: "/placeholder.svg?height=120&width=200",
+    },
+    {
+      id: 6,
+      title: "Crypto Basics",
+      count: "27 Videos",
+      type: "video",
+      image: "/placeholder.svg?height=120&width=200",
+    },
+    {
+      id: 7,
+      title: "Crypto Basics",
+      count: "27 Videos",
+      type: "video",
+      image: "/placeholder.svg?height=120&width=200",
+    },
+    {
+      id: 8,
+      title: "Crypto Basics",
+      count: "27 Videos",
+      type: "video",
+      image: "/placeholder.svg?height=120&width=200",
+    },
+  ]);
+
+  const [openDropdownId, setOpenDropdownId] = useState(null);
+  const dropdownRef = useRef({});
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        openDropdownId &&
+        !Object.values(dropdownRef.current).some(
+          (ref) => ref && ref.contains(event.target)
+        )
+      ) {
+        setOpenDropdownId(null);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [openDropdownId]);
+
+  const toggleDropdown = (id) => {
+    setOpenDropdownId(openDropdownId === id ? null : id);
+  };
+
+  const handleDelete = (id) => {
+    setVideos(videos.filter((video) => video.id !== id));
+    setOpenDropdownId(null);
+  };
+
+  const handleEdit = (id) => {
+    // Placeholder for edit navigation or action
+    console.log(`Navigate to edit page for video ID: ${id}`);
+    setOpenDropdownId(null);
+  };
+
+  return (
+    <div className="w-full p-6   rounded-lg">
+      <div className="flex justify-end mb-8 items-end">
+        <Link to="/video/create-category">
+          <button className="w-64 py-3 bg-[#62C1BF] hover:bg-[#62C1BF]/90 text-black rounded-full mt-4 transition-colors">
+            Create New Category
+          </button>
+        </Link>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {videos.map((video) => (
+          <div key={video.id} className="relative">
+            <Link
+              to={`/video/related-video`}
+              className="bg-[#373737] rounded-lg  p-4 block"
+            >
+              <img
+                className="bg-center w-full  object-cover rounded-md"
+                src={"/image.png"}
+                alt={video.title}
+              />
+              <h1 className="text-[24px] text-[#F3F3F3] font-medium mt-2">
+                {video.title}
+              </h1>
+              <div className="flex justify-between items-center">
+                <p className="text-[#62C1BF] text-xl">{video.count}</p>
+                <button
+                  onClick={(e) => {
+                    e.preventDefault(); // Prevent Link navigation
+                    toggleDropdown(video.id);
+                  }}
+                  className="text-white hover:text-gray-300"
+                >
+                  <EllipsisVertical className="w-5 h-5" />
+                </button>
+              </div>
+            </Link>
+            {openDropdownId === video.id && (
+              <div
+                ref={(el) => (dropdownRef.current[video.id] = el)}
+                className="absolute right-2 top-36 bg-[#4A4A4A] rounded-md shadow-lg z-10 w-32"
+              >
+                <button
+                  onClick={() => handleEdit(video.id)}
+                  className="block w-full text-left px-4 py-2 text-white hover:bg-[#62C1BF] rounded-t-md"
+                >
+                  Edit
+                </button>
+                <button
+                  onClick={() => handleDelete(video.id)}
+                  className="block w-full text-left px-4 py-2 text-white hover:bg-red-600 rounded-b-md"
+                >
+                  Delete
+                </button>
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
