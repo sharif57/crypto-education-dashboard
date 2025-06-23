@@ -48,36 +48,19 @@ const EditPrivacyPolicy = () => {
   console.log(content);
   return (
     <>
-      <div className="flex items-center gap-2 text-xl">
+      <div className="flex items-center gap-2 text-xl text-white">
         <FaAngleLeft />
         <h1>Privacy & Policy</h1>
       </div>
-      <div className="rounded-lg py-4 border-lightGray border-2 shadow-lg mt-8 bg-white">
+      <div className="rounded-lg py-4 border-lightGray border-2 shadow-lg mt-8 bg-[#373737] text-white">
         <div className="space-y-[24px] min-h-[83vh] bg-light-gray rounded-2xl">
-          <h3 className="text-2xl text-black mb-4 border-b-2 border-lightGray/40 pb-3 pl-16">
+          <h3 className="text-2xl text-white mb-4 border-b-2 border-lightGray/40 pb-3 pl-16">
             Privacy & Policy Edit
           </h3>
           <div className="w-full px-16">
             <div className="h-full border border-gray-400 rounded-md">
               <div className="ql-toolbar-container h-56">
-                {/* <div id="toolbar">
-                     <span className="ql-formats">
-   
-                       <button className="ql-align" value="left">
-                         Left
-                       </button>
-                       <button className="ql-align" value="center">
-                         Center
-                       </button>
-                       <button className="ql-align" value="right">
-                         Right
-                       </button>
-                       <button className="ql-align" value="justify">
-                         Justify
-                       </button>
-                     </span>
-   
-                   </div> */}
+                
                 <ReactQuill
                   placeholder="Enter your update terms & conditions..."
                   theme="snow"
@@ -85,7 +68,7 @@ const EditPrivacyPolicy = () => {
                   onChange={(value) => setContent(value)}
                   modules={modules}
                   formats={formats}
-                  className="custom-quill-editor"
+                  className="custom-quill-editor bg-white text-black h-full"
                 />
               </div>
             </div>
@@ -96,7 +79,7 @@ const EditPrivacyPolicy = () => {
               onClick={(e) => navigate(`edit`)}
               size="large"
               type="primary"
-              className="px-8 bg-black text-white hover:bg-black/90 rounded-full font-semibold w-1/4"
+              className="px-8 bg-[#62C1BF] text-white hover:bg-black/90 rounded-full font-semibold w-1/4"
             >
               Update
             </Button>
