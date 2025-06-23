@@ -82,9 +82,9 @@
 //             </li>
 //           </ul>
 
-//           <button className="w-full py-3 bg-[#62C1BF] hover:bg-amber-700 text-white rounded-full mt-4 transition-colors">
-//             Delete Plan
-//           </button>
+// <button className="w-full py-3 bg-[#62C1BF] hover:bg-amber-700 text-white rounded-full mt-4 transition-colors">
+//   Delete Plan
+// </button>
 //         </div>
 //         <div className="bg-white rounded-lg p-6 border border-[#F9A94B] flex flex-col ">
 //           <div className="flex justify-between  ga-4 items-center mb-4">
@@ -246,31 +246,32 @@
 //         </div>
 //       </div>
 
-//       <div className="mt-20">
-//         <Link
-//           to="/add-item"
-//           className="flex items-center px-6 py-3 bg-amber-600 hover:bg-amber-700 text-white rounded-full transition-colors"
-//         >
-//           <svg
-//             xmlns="http://www.w3.org/2000/svg"
-//             className="h-5 w-5 mr-2"
-//             viewBox="0 0 20 20"
-//             fill="currentColor"
-//           >
-//             <path
-//               fillRule="evenodd"
-//               d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-//               clipRule="evenodd"
-//             />
-//           </svg>
-//           Add New Subscription
-//         </Link>
-//       </div>
+// <div className="mt-20">
+//   <Link
+//     to="/add-item"
+//     className="flex items-center px-6 py-3 bg-amber-600 hover:bg-amber-700 text-white rounded-full transition-colors"
+//   >
+//     <svg
+//       xmlns="http://www.w3.org/2000/svg"
+//       className="h-5 w-5 mr-2"
+//       viewBox="0 0 20 20"
+//       fill="currentColor"
+//     >
+//       <path
+//         fillRule="evenodd"
+//         d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+//         clipRule="evenodd"
+//       />
+//     </svg>
+//     Add New Subscription
+//   </Link>
+// </div>
 //     </div>
 //   );
 // }
 
 import { Check } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function Subscription() {
   const plans = [
@@ -315,94 +316,119 @@ export default function Subscription() {
   ];
 
   return (
-    <section id="prices" className="relative bg-[#1a1a1a] py-16 lg:py-24">
-      {/* Background subtle pattern */}
-      <div className="absolute inset-0 opacity-5">
-        <div
-          className="absolute inset-0"
-          style={{
-            backgroundImage: `radial-gradient(circle at 2px 2px, rgba(6, 182, 212, 0.3) 1px, transparent 0)`,
-            backgroundSize: "40px 40px",
-          }}
-        ></div>
+    <div>
+      <div className="mt-8 flex justify-end items-center w-full ">
+        <Link
+          to="/add-item"
+          className="flex items-center w-1/5 px-6 py-3 bg-[#62C1BF] hover:bg-[#62C1BF] text-white rounded-full transition-colors"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5 mr-2"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fillRule="evenodd"
+              d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+              clipRule="evenodd"
+            />
+          </svg>
+          Add New Subscription
+        </Link>
       </div>
+      <section id="prices" className="relative bg-[#1a1a1a] py-16 lg:py-24">
+        {/* Background subtle pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div
+            className="absolute inset-0"
+            style={{
+              backgroundImage: `radial-gradient(circle at 2px 2px, rgba(6, 182, 212, 0.3) 1px, transparent 0)`,
+              backgroundSize: "40px 40px",
+            }}
+          ></div>
+        </div>
 
-      <div className="relative z-10 max-w-7xl mx-start px-4 sm:px-6 lg:px-8">
-        {/* Pricing Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-6 xl:gap-8 ">
-          {plans.map((plan) => (
-            <div
-              key={plan.name}
-              className={
-                "relative rounded-3xl p-8 transition-all duration-500 overflow-hidden group bg-gradient-to-br from-[#1c1c1c] to-[#2e2e2e] border border-gray-700/50 hover:border-cyan-400/30 hover:shadow-lg hover:shadow-cyan-400/10 min-h-[500px] flex flex-col"
-              }
-            >
-              {/* Hover Background Image */}
-              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0">
-                <div
-                  className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                  style={{
-                    backgroundImage: "url('/layers.png')",
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                  }}
-                />
-                <div className="absolute inset-0 " />
-              </div>
+        <div className="relative z-10 max-w-7xl mx-start px-4 sm:px-6 lg:px-8">
+          {/* Pricing Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-6 xl:gap-8 ">
+            {plans.map((plan) => (
+              <div
+                key={plan.name}
+                className={
+                  "relative rounded-3xl p-8 transition-all duration-500 overflow-hidden group bg-gradient-to-br from-[#1c1c1c] to-[#2e2e2e] border border-gray-700/50 hover:border-cyan-400/30 hover:shadow-lg hover:shadow-cyan-400/10 min-h-[500px] flex flex-col"
+                }
+              >
+                {/* Hover Background Image */}
+                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0">
+                  <div
+                    className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                    style={{
+                      backgroundImage: "url('/layers.png')",
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                    }}
+                  />
+                  <div className="absolute inset-0 " />
+                </div>
 
-              <div className="relative z-20  flex flex-col h-full">
-                <div className=" grow">
-                  {/* Price */}
-                  <div className="mb-6">
-                    <div className="flex items-baseline">
-                      <span className="text-4xl lg:text-4xl font-semibold text-white">
-                        ${plan.price}
-                      </span>
-                      <span className="text-gray-400 ml-2">/month</span>
+                <div className="relative z-20  flex flex-col h-full">
+                  <div className=" grow">
+                    {/* Price */}
+                    <div className="mb-6">
+                      <div className="flex items-baseline">
+                        <span className="text-4xl lg:text-4xl font-semibold text-white">
+                          ${plan.price}
+                        </span>
+                        <span className="text-gray-400 ml-2">/month</span>
+                      </div>
+                    </div>
+
+                    {/* Plan Name */}
+                    <h3 className="text-2xl lg:text-3xl font-medium text-white mb-4">
+                      {plan.name}
+                    </h3>
+
+                    {/* Description */}
+                    <p className="text-gray-300 text-base lg:text-lg leading-relaxed mb-8">
+                      {plan.description}
+                    </p>
+
+                    {/* Features */}
+                    <div className="space-y-4 mb-8 ">
+                      {plan.features.map((feature, featureIndex) => (
+                        <div
+                          key={featureIndex}
+                          className="flex items-start space-x-3"
+                        >
+                          <div className="flex-shrink-0 w-5 h-5 bg-cyan-400/20 rounded-full flex items-center justify-center mt-0.5">
+                            <Check className="w-3 h-3 text-cyan-400" />
+                          </div>
+                          <span className="text-gray-300 text-base">
+                            {feature}
+                          </span>
+                        </div>
+                      ))}
+                      <button className="w-full py-3 bg-[#62C1BF] hover:bg-[#62C1BF] text-white rounded-full mt-4 transition-colors">
+                        Delete Plan
+                      </button>
                     </div>
                   </div>
 
-                  {/* Plan Name */}
-                  <h3 className="text-2xl lg:text-3xl font-medium text-white mb-4">
-                    {plan.name}
-                  </h3>
-
-                  {/* Description */}
-                  <p className="text-gray-300 text-base lg:text-lg leading-relaxed mb-8">
-                    {plan.description}
-                  </p>
-
-                  {/* Features */}
-                  <div className="space-y-4 mb-8 ">
-                    {plan.features.map((feature, featureIndex) => (
-                      <div
-                        key={featureIndex}
-                        className="flex items-start space-x-3"
-                      >
-                        <div className="flex-shrink-0 w-5 h-5 bg-cyan-400/20 rounded-full flex items-center justify-center mt-0.5">
-                          <Check className="w-3 h-3 text-cyan-400" />
-                        </div>
-                        <span className="text-gray-300 text-base">
-                          {feature}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* CTA Button */}
-                {/* <Button
+                  {/* CTA Button */}
+                  {/* <Button
                   className={
                     "w-full !py-6 rounded-full text-lg font-medium transition-all duration-300  bg-text hover:bg-text cursor-pointer  text-black shadow-lg shadow-cyan-400/25 hover:shadow-cyan-400/40"
                   }
                 >
                   Choose Plan
                 </Button> */}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 }

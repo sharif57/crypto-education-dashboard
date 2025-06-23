@@ -1,10 +1,3 @@
-// import React from 'react'
-
-// export default function AddItem() {
-//   return (
-//     <div>AddItem</div>
-//   )
-// }
 
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -59,8 +52,8 @@ export default function AddItem() {
   return (
     <div className=" p-6">
       <div className=" ">
-        <div className="bg-white p-4 rounded-lg shadow-sm mb-6 flex items-center">
-          <Link to="/subscription" className="mr-4 text-gray-700">
+        <div className="bg-[#373737] p-4 rounded-lg shadow-sm mb-6 flex items-center">
+          <Link to="/subscription" className="mr-4 text-white">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
@@ -74,7 +67,7 @@ export default function AddItem() {
               />
             </svg>
           </Link>
-          <h1 className="text-lg font-medium text-gray-800">
+          <h1 className="text-lg font-medium text-white">
             Add Subscription
           </h1>
         </div>
@@ -85,7 +78,7 @@ export default function AddItem() {
               <input
                 type="text"
                 placeholder="Package Title"
-                className="w-full px-4 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                className="w-full px-4 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 bg-[#373737] focus:ring-[bg-[#373737]] focus:border-transparent"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 required
@@ -94,7 +87,7 @@ export default function AddItem() {
               <input
                 type="text"
                 placeholder="Package Subtitle"
-                className="w-full px-4 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                className="w-full px-4 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 bg-[#373737] focus:ring-[bg-[#373737]] focus:border-transparent"
                 value={subtitle}
                 onChange={(e) => setSubtitle(e.target.value)}
                 required
@@ -103,14 +96,14 @@ export default function AddItem() {
               <input
                 type="text"
                 placeholder="Package Amount"
-                className="w-full px-4 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
+                className="w-full px-4 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 bg-[#373737] focus:ring-[bg-[#373737]] focus:border-transparent"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
                 required
               />
             </div>
 
-            <div className="bg-white p-5 rounded-lg border border-gray-200 mb-6">
+            <div className="bg-[#373737] p-5 rounded-lg border border-gray-200 mb-6">
               <h2 className="text-amber-600 font-medium mb-4">
                 Select Features :
               </h2>
@@ -122,7 +115,7 @@ export default function AddItem() {
                       className={`w-5 h-5 rounded-full ${
                         feature.selected
                           ? "bg-amber-500"
-                          : "bg-white border border-gray-300"
+                          : "bg-[#373737] border border-gray-300"
                       } flex items-center justify-center mr-3 cursor-pointer`}
                       onClick={() => toggleFeature(feature.id)}
                     >
@@ -141,7 +134,7 @@ export default function AddItem() {
                         </svg>
                       )}
                     </div>
-                    <span className="text-sm text-gray-700">
+                    <span className="text-sm text-white">
                       {feature.name}
                     </span>
                   </div>
@@ -152,7 +145,7 @@ export default function AddItem() {
             <div className="flex justify-center">
               <button
                 type="submit"
-                className="px-8 py-3 bg-amber-600 hover:bg-amber-700 text-white rounded-md transition-colors font-medium"
+                className="px-8 py-3 bg-[#62C1BF]  text-white rounded-md transition-colors font-medium"
               >
                 Create
               </button>

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Button, Form, Input } from "antd";
-;
+
 import { useNavigate } from "react-router-dom";
 import PhoneCountryInput from "../../Components/PhoneCountryInput";
 
@@ -19,7 +19,7 @@ const EditMyProfile = () => {
     name: "Jane Kooper",
     email: "enrique@gmail.com",
     phone: "+880 150597212",
-    profile: dashProfile,
+    profile: "/logo.png",
   };
   // console.log(code);
 
@@ -95,7 +95,7 @@ const EditMyProfile = () => {
                     // onClick={(e) => navigate(`edit`)}
                     size="large"
                     type="primary"
-                    className="px-8 bg-black text-white hover:bg-black/90 rounded-full font-semibold"
+                    className="px-8 bg-[#6F6F6F] text-white hover:bg-black/90 rounded-full font-semibold"
                   >
                     Save Changes
                   </Button>
