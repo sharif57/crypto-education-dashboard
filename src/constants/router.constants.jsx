@@ -30,6 +30,7 @@ import RelatedVideo from "../pages/Main/video/RelatedVideo";
 import RelatedVideoAdd from "../pages/Main/video/RelatedVideoAdd";
 import LiveClass from "../pages/Main/LiveClass/LiveClass";
 import TrainAI from "../pages/Main/TrainAI/TrainAI";
+import DashboardHomeTable from "../Components/DashboardHomeTable";
 
 export const dashboardItems = [
   {
@@ -42,7 +43,7 @@ export const dashboardItems = [
     name: "User",
     path: "users",
     icon: ShoppingBag,
-    element: <User />,
+    element: <DashboardHomeTable />,
   },
   {
     name: "Earnings",
