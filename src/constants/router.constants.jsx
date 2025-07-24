@@ -77,6 +77,7 @@ export const dashboardItems = [
   {
     path: "video/related-video",
     element: <RelatedVideo />,
+    // loader: params => 
   },
   {
     path: "video/related-video-add",

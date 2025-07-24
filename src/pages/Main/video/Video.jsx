@@ -1,102 +1,15 @@
-// import { EllipsisVertical } from "lucide-react";
-// import { Link } from "react-router-dom";
 
-// export default function Video() {
-//   const videos = [
-//     {
-//       id: 1,
-//       title: "IntroductionSeason",
-//       count: "1 Document",
-//       type: "document",
-//       image: "/placeholder.svg?height=120&width=200",
-//     },
-//     {
-//       id: 2,
-//       title: "Crypto Basics",
-//       count: "27 Videos",
-//       type: "video",
-//       image: "/placeholder.svg?height=120&width=200",
-//     },
-//     {
-//       id: 3,
-//       title: "Crypto Basics",
-//       count: "27 Videos",
-//       type: "video",
-//       image: "/placeholder.svg?height=120&width=200",
-//     },
-//     {
-//       id: 4,
-//       title: "Crypto Basics",
-//       count: "27 Videos",
-//       type: "video",
-//       image: "/placeholder.svg?height=120&width=200",
-//     },
-//     {
-//       id: 5,
-//       title: "Crypto Basics",
-//       count: "27 Videos",
-//       type: "video",
-//       image: "/placeholder.svg?height=120&width=200",
-//     },
-//     {
-//       id: 6,
-//       title: "Crypto Basics",
-//       count: "27 Videos",
-//       type: "video",
-//       image: "/placeholder.svg?height=120&width=200",
-//     },
-//     {
-//       id: 7,
-//       title: "Crypto Basics",
-//       count: "27 Videos",
-//       type: "video",
-//       image: "/placeholder.svg?height=120&width=200",
-//     },
-//     {
-//       id: 8,
-//       title: "Crypto Basics",
-//       count: "27 Videos",
-//       type: "video",
-//       image: "/placeholder.svg?height=120&width=200",
-//     },
-//   ];
-//   return (
-//     <div>
-//       <div className="flex justify-end mb-8 items-end">
-//         <Link to={"/video/create-category"}>
-//           <button className="w-64 py-3 bg-[#62C1BF] hover:bg-[#62C1BF] text-black rounded-full mt-4 transition-colors">
-//             Create New Category
-//           </button>{" "}
-//         </Link>
-//       </div>
-//       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-//         {videos.map((video) => (
-//           <Link to={`/video/related-video`} key={video.id} className="bg-[#373737] rounded-lg p-4 ">
-//             <img
-//               className="bg-center w-full"
-//               src="/image.png"
-//               alt=""
-//             />
-
-//             <h1 className="text-[24px] text-[#F3F3F3] font-medium">
-//               {video.title}
-//             </h1>
-//             <div className="flex justify-between items-center">
-//               <p className="text-[#62C1BF] text-xl">{video.count}</p>
-//               <EllipsisVertical className="text-white" />
-//             </div>
-//           </Link>
-//         ))}
-//       </div>
-//     </div>
-//   );
-// }
 
 import { useState, useRef, useEffect } from "react";
 import { EllipsisVertical } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useAllCategoriesQuery, useDeleteCategoryMutation } from "../../../redux/features/tutorialSlice";
+import Loading from "../../../Components/Loading";
+import toast from "react-hot-toast";
 
 export default function Video() {
+  const {data, isLoading} = useAllCategoriesQuery();
+  console.log(data?.data, "data from video categories");
   const [videos, setVideos] = useState([
     {
       id: 1,
@@ -155,7 +68,7 @@ export default function Video() {
       image: "/placeholder.svg?height=120&width=200",
     },
   ]);
-
+const [deleteCategory] =useDeleteCategoryMutation();
   const [openDropdownId, setOpenDropdownId] = useState(null);
   const dropdownRef = useRef({});
 
@@ -179,7 +92,20 @@ export default function Video() {
     setOpenDropdownId(openDropdownId === id ? null : id);
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = async(id) => {
+
+    try {
+      const res = await deleteCategory(id);
+      toast.success(res?.data?.data || "Category deleted successfully");
+      console.log(res, "delete category response");
+      if (res.error) {
+        console.error("Failed to delete category:", res.error);
+        return;
+      }
+    } catch (error) {
+      console.error("Error deleting category:", error);
+    }
+
     setVideos(videos.filter((video) => video.id !== id));
     setOpenDropdownId(null);
   };
@@ -189,6 +115,10 @@ export default function Video() {
     console.log(`Navigate to edit page for video ID: ${id}`);
     setOpenDropdownId(null);
   };
+
+  if (isLoading) {
+    return <div><Loading /></div>;
+  }
 
   return (
     <div className="w-full p-6   rounded-lg">
@@ -200,22 +130,22 @@ export default function Video() {
         </Link>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {videos.map((video) => (
+        {data?.data?.map((video) => (
           <div key={video.id} className="relative">
             <Link
               to={`/video/related-video`}
               className="bg-[#373737] rounded-lg  p-4 block"
             >
               <img
-                className="bg-center w-full  object-cover rounded-md"
-                src={"/image.png"}
-                alt={video.title}
+                className="bg-center w-full h-[200px]  object-cover rounded-md"
+                src={video?.thumbnail ||"/image.png"}
+                alt={video?.name}
               />
-              <h1 className="text-[24px] text-[#F3F3F3] font-medium mt-2">
-                {video.title}
+              <h1 className="text-[24px] w-full text-[#F3F3F3] font-medium mt-2">
+                {video?.name}
               </h1>
               <div className="flex justify-between items-center">
-                <p className="text-[#62C1BF] text-xl">{video.count}</p>
+                <p className="text-[#62C1BF] text-xl">{video?.total_videos} Videos</p>
                 <button
                   onClick={(e) => {
                     e.preventDefault(); // Prevent Link navigation
