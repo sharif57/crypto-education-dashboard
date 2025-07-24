@@ -22,7 +22,7 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { BadgePoundSterling, Book, ShoppingBag, SmartphoneNfc, VideoIcon } from "lucide-react";
 import AddItem from "../pages/Main/Shop/AddItem";
 import TransactionHome from "../pages/Main/Transaction/TransactionHome";
-import User from "../pages/Main/Shop/User";
+// import User from "../pages/Main/Shop/User";
 import Subscription from "../pages/Main/Parties/Subscription";
 import Video from "../pages/Main/video/Video";
 import CreateCategorty from "../pages/Main/video/CreateCategorty";
@@ -31,6 +31,7 @@ import RelatedVideoAdd from "../pages/Main/video/RelatedVideoAdd";
 import LiveClass from "../pages/Main/LiveClass/LiveClass";
 import TrainAI from "../pages/Main/TrainAI/TrainAI";
 import DashboardHomeTable from "../Components/DashboardHomeTable";
+import AllLiveClass from "../pages/Main/LiveClass/AllLiveClass";
 
 export const dashboardItems = [
   {
@@ -85,6 +86,11 @@ export const dashboardItems = [
     name: 'Live Class',
     path: "live-class",
     icon: SmartphoneNfc ,
+    // element: <LiveClass />,
+    element:<AllLiveClass /> 
+  },
+  {
+    path: "live-class/create",
     element: <LiveClass />,
   },
   {

@@ -1,18 +1,25 @@
-// import React from 'react'
-
-// export default function LiveClass() {
-//   return (
-//     <div>LiveClass</div>
-//   )
-// }
 
 import { useState } from "react";
+import { useCreateLiveClassMutation } from "../../../redux/features/liveClassSlice";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 export default function LiveClass() {
+  const router = useNavigate();
   const [title, setTitle] = useState("");
   const [link, setLink] = useState("");
+  const [createLiveClass] =useCreateLiveClassMutation();
 
   const handleSubmit = (e) => {
+    try {
+      const res = createLiveClass({ title, link });
+      console.log("Live class created:", res);
+      toast.success("Live class created successfully!");
+      router(-1)
+    } catch (error) {
+      console.error("Error creating live class:", error);
+      toast.error("Failed to create live class. Please try again.");
+    }
     e.preventDefault();
     console.log("Form submitted:", { title, link });
   };

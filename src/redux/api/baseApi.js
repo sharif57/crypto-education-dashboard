@@ -18,6 +18,7 @@ export const baseApi = createApi({
   }),
   tagTypes: [
     "User",
+    'LiveClass',
     "Privacy",
   ], // Added all necessary tags
   endpoints: () => ({}),
