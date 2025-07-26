@@ -133,7 +133,7 @@ const [deleteCategory] =useDeleteCategoryMutation();
         {data?.data?.map((video) => (
           <div key={video.id} className="relative">
             <Link
-              to={`/video/related-video`}
+              to={`/video/related-video/${video.id}`}
               className="bg-[#373737] rounded-lg  p-4 block"
             >
               <img

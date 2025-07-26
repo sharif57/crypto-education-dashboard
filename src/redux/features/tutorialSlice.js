@@ -29,8 +29,32 @@ export const tutorialApi = baseApi.injectEndpoints({
             invalidatesTags: ["Video"],
         }),
 
+        singleCategory: builder.query({
+            query: (id) => ({
+                url: `/tutorials/category_videos/${id}/`,
+                method: "GET",
+            }),
+            providesTags: ["Video"],
+        }),
+
+        categoryRelatedVideosAdd: builder.mutation({
+            query: ({ data }) => ({
+                url: `/tutorials/videos/`,
+                method: "POST",
+                body: data,
+            }),
+            invalidatesTags: ["Video"],
+        }),
+        relatedVideoDelete: builder.mutation({
+            query: (id) => ({
+                url: `/tutorials/videos/${id}/`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ["Video"],
+        }),
+
 
     }),
 });
 
-export const { useAllCategoriesQuery, useDeleteCategoryMutation, useCreateCategoryMutation } = tutorialApi;
+export const { useAllCategoriesQuery, useDeleteCategoryMutation, useCreateCategoryMutation, useSingleCategoryQuery , useCategoryRelatedVideosAddMutation, useRelatedVideoDeleteMutation} = tutorialApi;

@@ -10,7 +10,6 @@ const Header = () => {
   const notificationRef = useRef(null);
   const [, setNotificationPopup] = useState(false);
   const {data} =useUserProfileQuery();
-  console.log(data?.data.full_name ,'data?.data.email')
   const user = data?.data
 
 

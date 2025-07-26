@@ -75,14 +75,22 @@ export const dashboardItems = [
     element: <CreateCategorty />,
   },
   {
-    path: "video/related-video",
+    path: "video/related-video/:id",
     element: <RelatedVideo />,
-    // loader: params => 
+    loader: ({ params }) =>
+			fetch(
+				`http://172.252.13.79:3235/api/v1/tutorials/categories/${params.id}`
+			),
   },
   {
-    path: "video/related-video-add",
+    path: "video/related-video-add/:id",
     element: <RelatedVideoAdd />,
+     loader: ({ params }) =>
+			fetch(
+				`http://172.252.13.79:3235/api/v1/tutorials/videos/${params.id}`
+			),
   },
+
   {
     name: 'Live Class',
     path: "live-class",
