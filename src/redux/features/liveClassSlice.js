@@ -29,8 +29,17 @@ export const liveClassApi = baseApi.injectEndpoints({
             invalidatesTags: ["LiveClass"],
         }),
 
+        updateLiveClass: builder.mutation({
+            query: ( data ) => ({
+                url: `/tutorials/live_classes_update`,
+                method: "PUT",
+                body: data,
+            }),
+            invalidatesTags: ["LiveClass"],
+        }),
+
 
     }),
 });
 
-export const { useLiveClassQuery, useDeleteLiveClassMutation, useCreateLiveClassMutation } = liveClassApi;
+export const { useLiveClassQuery, useDeleteLiveClassMutation, useCreateLiveClassMutation, useUpdateLiveClassMutation } = liveClassApi;

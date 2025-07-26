@@ -16,14 +16,11 @@ export const userApi = baseApi.injectEndpoints({
       }),
       providesTags: ["User"],
     }),
-      updateProfile: builder.mutation({
+    updateProfile: builder.mutation({
       query: (data) => ({
         url: "/auth/user_profile/",
         method: "PATCH",
         body: data,
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
       }),
       invalidatesTags: ["User"],
     }),

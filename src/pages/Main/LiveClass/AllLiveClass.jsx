@@ -1,17 +1,50 @@
-import { Trash2 } from "lucide-react";
+
+import { Edit } from "lucide-react";
 import toast from "react-hot-toast";
-import { useDeleteLiveClassMutation, useLiveClassQuery } from "../../../redux/features/liveClassSlice";
+import { useLiveClassQuery, useUpdateLiveClassMutation } from "../../../redux/features/liveClassSlice";
 import Loading from "../../../Components/Loading";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 export default function AllLiveClass() {
-  const { data, isLoading, isError } = useLiveClassQuery({
-  
-    refetchInterval: 500,
+  const [openModal, setOpenModal] = useState(false);
+  const [selectedClass, setSelectedClass] = useState(null);
 
+  // Open modal and set selected class
+  const openModalHandler = (liveClass) => {
+    setSelectedClass(liveClass);
+    setOpenModal(true);
+  };
+
+  const { data, isLoading, isError } = useLiveClassQuery({
+    refetchInterval: 500,
   });
-  const [deleteLiveClass] =useDeleteLiveClassMutation()
-//   const [deleteLiveClass] = useDeleteLiveClassMutation();
+
+  const [updateLiveClass] = useUpdateLiveClassMutation();
+
+  const handleUpdateLiveClass = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const updatedData = {
+      title: form.title.value,
+      description: form.description.value,
+      link: form.link.value,
+      date_time: form.date_time.value,
+      duration_minutes: Number(form.duration_minutes.value),
+    };
+
+    try {
+      const res = await updateLiveClass(updatedData);
+      if (res.error) {
+        throw new Error(res.error);
+      }
+      toast.success("Live Class updated successfully!");
+      setOpenModal(false);
+    } catch (error) {
+      console.error("Error updating live class:", error);
+      toast.error("Failed to update live class. Please try again.");
+    }
+  };
 
   // Format date and time for display
   const formatDateTime = (dateString) => {
@@ -25,33 +58,23 @@ export default function AllLiveClass() {
     });
   };
 
-  // Handle delete action
-  const handleDelete = async (id) => {
-     {
-      try {
-        await deleteLiveClass(id).unwrap();
-        toast.success("Live class deleted successfully!");
-      } catch (error) {
-        const errorMessage = error?.data?.message || "Failed to delete live class.";
-        toast.error(errorMessage);
-        console.error("Delete failed:", error);
-      }
-    }
-  };
-
   return (
     <div className="min-h-screen bg-[#373737] rounded-lg p-6">
       {/* Header */}
       <div className="mb-6 flex justify-between items-center">
         <h1 className="text-white text-2xl font-medium">All Live Classes</h1>
         <Link to="/live-class/create">
-                <button className="w-64 py-3 bg-[#62C1BF] hover:bg-[#62C1BF] text-black rounded-full mt-4 transition-colors">Create New Live Class</button>
-</Link>
-              </div>
+          <button className="w-64 py-3 bg-[#62C1BF] hover:bg-[#62C1BF]/90 text-black rounded-full mt-4 transition-colors">
+            Create New Live Class
+          </button>
+        </Link>
+      </div>
 
       {/* Loading and Error States */}
       {isLoading && (
-        <div className="text-center text-white py-4"><Loading /></div>
+        <div className="text-center text-white py-4">
+          <Loading />
+        </div>
       )}
       {isError && (
         <div className="text-center text-red-500 py-4">
@@ -87,10 +110,10 @@ export default function AllLiveClass() {
                   <div>{liveClass.duration_minutes}</div>
                   <div className="text-center">
                     <button
-                      onClick={() => handleDelete(liveClass.id)}
+                      onClick={() => openModalHandler(liveClass)}
                       className="text-red-400 hover:text-red-500 transition-colors"
                     >
-                      <Trash2 className="w-4 h-4" />
+                      <Edit className="w-4 h-4" />
                     </button>
                   </div>
                 </div>
@@ -101,6 +124,109 @@ export default function AllLiveClass() {
               </div>
             )}
           </div>
+
+          {/* Modal for Editing Live Class */}
+          {openModal && selectedClass && (
+            <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50">
+              <div className="bg-gray-800 p-6 rounded-lg w-full max-w-2xl">
+                <h2 className="text-white text-lg font-medium mb-4">
+                  Edit Live Class
+                </h2>
+                <form onSubmit={handleUpdateLiveClass} className="space-y-6">
+                  <div>
+                    <label htmlFor="title" className="text-gray-400">
+                      Title
+                    </label>
+                    <input
+                      id="title"
+                      name="title"
+                      type="text"
+                      defaultValue={selectedClass.title}
+                      placeholder="Title"
+                      className="w-full p-2 bg-gray-700 rounded-lg text-white"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="description" className="text-gray-400">
+                      Description
+                    </label>
+                    <input
+                      id="description"
+                      name="description"
+                      type="text"
+                      defaultValue={selectedClass.description}
+                      placeholder="Description"
+                      className="w-full p-2 bg-gray-700 rounded-lg text-white"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="link" className="text-gray-400">
+                      Link
+                    </label>
+                    <input
+                      id="link"
+                      name="link"
+                      type="text"
+                      defaultValue={selectedClass.link}
+                      placeholder="Link"
+                      className="w-full p-2 bg-gray-700 rounded-lg text-white"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="date_time" className="text-gray-400">
+                      Date & Time
+                    </label>
+                    <input
+                      id="date_time"
+                      name="date_time"
+                      type="datetime-local"
+                      defaultValue={
+                        selectedClass.date_time
+                          ? new Date(selectedClass.date_time)
+                              .toISOString()
+                              .slice(0, 16)
+                          : ""
+                      }
+                      className="w-full p-2 bg-gray-700 rounded-lg text-white"
+                      required
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="duration_minutes" className="text-gray-400">
+                      Duration (min)
+                    </label>
+                    <input
+                      id="duration_minutes"
+                      name="duration_minutes"
+                      type="number"
+                      defaultValue={selectedClass.duration_minutes}
+                      placeholder="Duration (min)"
+                      className="w-full p-2 bg-gray-700 rounded-lg text-white"
+                      required
+                    />
+                  </div>
+                  <div className="flex justify-end mt-4">
+                    <button
+                      type="submit"
+                      className="px-4 py-2 bg-[#62C1BF] text-black rounded-lg mr-2 hover:bg-[#62C1BF]/90 transition-colors"
+                    >
+                      Save
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setOpenModal(false)}
+                      className="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-colors"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          )}
         </div>
       )}
     </div>
