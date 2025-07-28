@@ -1,18 +1,32 @@
 
+import { useState } from "react";
 import {  useNavigate } from "react-router-dom";
+import { useForgotPasswordMutation } from "../../redux/features/authSlice";
+import toast from "react-hot-toast";
 
 export default function ForgotPassword() {
   const router = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const [email, setEmail] = useState("");
+
+  const [forgotPassword] =useForgotPasswordMutation();
 
   const handleForgotPassword = async (e) => {
     e.preventDefault();
-    try {
-      // Handle sign-in logic
-      console.log("Signing in...");
-      router("/auth/verify-email");
-      // Example: await signIn(email, password);
+    setLoading(true);
+      try {
+      const res = await forgotPassword({ email }).unwrap();
+      toast.success(res.message || "OTP sent successfully!");
+      router(`/auth/verify-email?email=${email}`);
     } catch (error) {
-      console.error("Sign in failed:", error);
+      let errorMessage = "Failed to send OTP. Please try again.";
+      if (error && typeof error === "object" && "data" in error && error.data && typeof error.data === "object" && "error" in error.data) {
+        errorMessage = (error.data.error || errorMessage);
+      }
+      toast.error(errorMessage);
+      console.error("Failed to send OTP:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -39,6 +53,8 @@ export default function ForgotPassword() {
                 Email
               </label>
               <input
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 id="signup-email"
                 type="email"
                 placeholder="Enter your email"
@@ -50,8 +66,9 @@ export default function ForgotPassword() {
             <button
               type="submit"
               className="w-full py-2.5 bg-[#62C1BF] hover:bg-teal-600 text-black font-medium rounded-full transition-colors"
+              disabled={loading}
             >
-              Send Otp
+              {loading ? "Sending..." : "Send Otp"}
             </button>
           </form>
 

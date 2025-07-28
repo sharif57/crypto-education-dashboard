@@ -29,7 +29,7 @@ const MyProfile = () => {
         <h1>Personal information</h1>
       </div>
       <div className="rounded-lg py-4 border-lightGray border-2 shadow-lg mt-8 bg-[#373737]">
-        <h3 className="text-2xl text-black mb-4 pl-5 border-b-2 border-lightGray/40 pb-3">
+        <h3 className="text-2xl text-white mb-4 pl-5 border-b-2 border-lightGray/40 pb-3">
           Personal information
         </h3>
         <div>

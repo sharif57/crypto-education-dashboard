@@ -3,7 +3,6 @@ import { Edit } from "lucide-react";
 import toast from "react-hot-toast";
 import { useLiveClassQuery, useUpdateLiveClassMutation } from "../../../redux/features/liveClassSlice";
 import Loading from "../../../Components/Loading";
-import { Link } from "react-router-dom";
 import { useState } from "react";
 
 export default function AllLiveClass() {
@@ -63,11 +62,11 @@ export default function AllLiveClass() {
       {/* Header */}
       <div className="mb-6 flex justify-between items-center">
         <h1 className="text-white text-2xl font-medium">All Live Classes</h1>
-        <Link to="/live-class/create">
+        {/* <Link to="/live-class/create">
           <button className="w-64 py-3 bg-[#62C1BF] hover:bg-[#62C1BF]/90 text-black rounded-full mt-4 transition-colors">
             Create New Live Class
           </button>
-        </Link>
+        </Link> */}
       </div>
 
       {/* Loading and Error States */}

@@ -10,12 +10,10 @@ import EditPrivacyPolicy from "../pages/Settings/EditPrivacyPolicy";
 
 import { MdOutlineSecurityUpdateWarning } from "react-icons/md";
 import { FaServicestack } from "react-icons/fa6";
-import { BiMessageSquareDetail } from "react-icons/bi";
 import Setting from "../pages/Main/Setting/Setting";
 import ChangePassword from "../pages/Main/Setting/Change-password/ChangePassword";
 import ForgotPassword from "../pages/Main/Setting/Change-password/ForgotPassword";
 import VerifyEmail from "../pages/Main/Setting/Change-password/VerifyEmail";
-import Trust from "../pages/Settings/Trust";
 import EditTrust from "../pages/Settings/EditTrust";
 import { TbCash } from "react-icons/tb";
 import { IoSettingsOutline } from "react-icons/io5";
@@ -165,12 +163,12 @@ export const dashboardItems = [
         path: "settings/privacy-policy/edit",
         element: <EditPrivacyPolicy />,
       },
-      {
-        name: "Trust & Safety",
-        icon: BiMessageSquareDetail,
-        path: "settings/trust-safety",
-        element: <Trust />,
-      },
+      // {
+      //   name: "Trust & Safety",
+      //   icon: BiMessageSquareDetail,
+      //   path: "settings/trust-safety",
+      //   element: <Trust />,
+      // },
       {
         path: "settings/trust-safety/edit",
         element: <EditTrust />,

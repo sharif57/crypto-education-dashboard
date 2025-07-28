@@ -1,6 +1,5 @@
 import { Button } from "antd";
 import { useNavigate } from "react-router-dom";
-import PageHeading from "../../Components/PageHeading";
 import { FaAngleLeft } from "react-icons/fa6";
 
 const Trust = () => {

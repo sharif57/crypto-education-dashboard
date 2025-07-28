@@ -1,3 +1,4 @@
+
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import logo from "/logo.png";
 import { createElement, useEffect, useState } from "react";
@@ -10,7 +11,7 @@ import { LogOut } from "lucide-react";
 const Sidebar = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [openNome, setOpenNome] = useState({});
+  const [, setOpenNome] = useState({});
 
   const handleLogOut = () => {
     Swal.fire({
@@ -24,7 +25,7 @@ const Sidebar = () => {
     }).then((res) => {
       if (res.isConfirmed) {
         // dispatch(logout());
-        // localStorage.removeItem("token");
+        localStorage.removeItem("accessToken");
         // localStorage.removeItem("user-update");
         navigate("/auth");
       }
