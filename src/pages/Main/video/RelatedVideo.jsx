@@ -19,6 +19,9 @@ export default function RelatedVideo() {
     const res = await relatedVideoDelete(id);
     console.log("Response from deleting video:", res);
 
+
+
+
     if (res?.data?.status === 'success') {
       toast.success("Video deleted successfully!");
     }
@@ -49,7 +52,7 @@ export default function RelatedVideo() {
       {data?.data.videos?.length > 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {data?.data?.videos?.map((video) => (
-          <div key={video.id} className="bg-[#373737] rounded-lg p-4 ">
+          <div key={video?.object_id} className="bg-[#373737] rounded-lg p-4 ">
            
             <video
               className="w-full h-[200px] bg-center rounded-lg"
@@ -66,7 +69,7 @@ export default function RelatedVideo() {
             </div>
             <div className="flex justify-between items-center">
               {/* <EllipsisVertical className="text-white" /> */}
-              <button onClick={() => handleDelete(video.id)} disabled={loading} className="text-black bg-[#62C1BF] py-2 px-4 w-full mt-5 rounded-md">
+              <button onClick={() => handleDelete(video?.object_id)} disabled={loading} className="text-black bg-[#62C1BF] py-2 px-4 w-full mt-5 rounded-md">
                 {loading ? "Deleting..." : "Delete"}
               </button>
             </div>

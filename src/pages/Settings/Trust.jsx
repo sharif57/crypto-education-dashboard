@@ -24,7 +24,7 @@ const Trust = () => {
                         </div>
                         <div className="flex justify-end pt-4">
                             <Button
-                                onClick={(e) => navigate(`edit`)}
+                                onClick={() => navigate(`edit`)}
                                 size="large"
                                 type="primary"
                                 className="px-8 bg-[#62C1BF] text-white hover:bg-black/90 rounded-full font-semibold w-1/4"

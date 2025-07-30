@@ -3,13 +3,19 @@
 import { useState, useRef, useEffect } from "react";
 import { EllipsisVertical } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useAllCategoriesQuery, useDeleteCategoryMutation } from "../../../redux/features/tutorialSlice";
+import { useAllCategoriesQuery, useDeleteCategoryMutation, useUpdateCategoryMutation } from "../../../redux/features/tutorialSlice";
 import Loading from "../../../Components/Loading";
 import toast from "react-hot-toast";
 
 export default function Video() {
+
+  const [editModel, setEditModel] = useState(false);
+
   const {data, isLoading} = useAllCategoriesQuery();
   console.log(data?.data, "data from video categories");
+
+  const [updateCategory] =useUpdateCategoryMutation();
+  
   const [videos, setVideos] = useState([
     {
       id: 1,
@@ -112,6 +118,22 @@ const [deleteCategory] =useDeleteCategoryMutation();
 
   const handleEdit = (id) => {
     // Placeholder for edit navigation or action
+
+    setEditModel(true);
+    try {
+      const fromData = new FormData();
+    fromData.append("name", document.getElementById("categoryName").value);
+    if(document.getElementById("categoryImageUpload").files[0]) {
+      fromData.append("thumbnail", document.getElementById("categoryImageUpload").files[0]);
+    }
+
+    const res = updateCategory({data: fromData, id});
+    console.log(res, "update category response")
+    } catch (error) {
+      console.log("Error updating category:", error);
+    }
+
+
     console.log(`Navigate to edit page for video ID: ${id}`);
     setOpenDropdownId(null);
   };
@@ -179,6 +201,51 @@ const [deleteCategory] =useDeleteCategoryMutation();
           </div>
         ))}
       </div>
+
+      {/* edit modal  name and image */}
+
+{editModel && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg w-96">
+            <h2 className="text-xl font-semibold mb-4">Edit Category</h2>
+            <form onSubmit={handleEdit  }>
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-2" htmlFor="categoryName">
+                  Category Name
+                </label>
+                <input
+                  type="text"
+                  id="categoryName"
+                  // value={editFormData.name}
+                  className="border border-gray-300 p-2 rounded w-full"
+                />
+              </div>
+           
+              {/* upload image */}
+
+              <div className="mb-4">
+                <label className="block text-sm font-medium mb-2" htmlFor="categoryImageUpload">
+                  Upload Category Image
+                </label>
+                <input
+                  type="file"
+                  id="categoryImageUpload"
+                  className="border border-gray-300 p-2 rounded w-full"
+                />
+              </div>
+
+              <div className="flex justify-end">
+                <button
+                  type="submit"
+                  className="bg-[#62C1BF] text-white px-4 py-2 rounded"
+                >
+                  Save Changes
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

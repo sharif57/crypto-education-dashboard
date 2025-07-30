@@ -53,8 +53,17 @@ export const tutorialApi = baseApi.injectEndpoints({
             invalidatesTags: ["Video"],
         }),
 
+        updateCategory: builder.mutation({
+            query: ({data, id}) => ({
+                url: `/tutorials/categories/${id}/`,
+                method: "PATCH",
+                body: data,
+            }),
+            invalidatesTags: ["Video"],
+        })
+
 
     }),
 });
 
-export const { useAllCategoriesQuery, useDeleteCategoryMutation, useCreateCategoryMutation, useSingleCategoryQuery , useCategoryRelatedVideosAddMutation, useRelatedVideoDeleteMutation} = tutorialApi;
+export const { useAllCategoriesQuery, useDeleteCategoryMutation, useCreateCategoryMutation, useSingleCategoryQuery , useCategoryRelatedVideosAddMutation, useRelatedVideoDeleteMutation, useUpdateCategoryMutation} = tutorialApi;
