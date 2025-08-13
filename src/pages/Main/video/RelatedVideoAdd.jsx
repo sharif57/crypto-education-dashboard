@@ -80,6 +80,7 @@ const [categoryRelatedVideosAdd] =useCategoryRelatedVideosAddMutation();
       formData.append('title', title);
       formData.append('duration', duration);
       formData.append('language', selectLanguage);
+      formData.append('course', id);
       // formData.append('video_file', selectedVideo);
       formData.append('category', id); // Assuming 'id' is the category ID
       if (selectedVideo){

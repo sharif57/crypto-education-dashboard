@@ -31,11 +31,23 @@ export const tutorialApi = baseApi.injectEndpoints({
 
         singleCategory: builder.query({
             query: (id) => ({
-                url: `/tutorials/category_videos/${id}/`,
+                url: `/tutorials/categories/courses/${id}/`,
                 method: "GET",
             }),
             providesTags: ["Video"],
         }),
+
+        //   categoryVideo: builder.query({
+        //     query: (id) => ({
+        //         url: `/tutorials/categories/courses/${id}/`,
+        //         method: "GET",
+        //         headers: {
+        //             Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        //         },
+        //     }),
+
+        //     providesTags: ["Category"],
+        // }),
 
         categoryRelatedVideosAdd: builder.mutation({
             query: ({ data }) => ({
