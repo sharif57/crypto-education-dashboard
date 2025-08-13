@@ -1,18 +1,27 @@
+// import React from 'react'
+
+// export default function CreateCourse() {
+//   return (
+//     <div>
+//       <h1></h1>
+//     </div>
+//   )
+// }
 
 
 import { useRef, useState } from "react";
-import { useCreateCategoryMutation } from "../../../redux/features/tutorialSlice";
+import { useAddCourseMutation, useCreateCategoryMutation } from "../../../redux/features/tutorialSlice";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
-export default function CreateCategory() {
+export default function CreateCourse() {
   const [category, setCategory] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
   const [previewImage, setImagePreview] = useState(null);
   const [isDraggingOver, setIsDragging] = useState(false);
   const fileRefInput = useRef(null);
   const navigate = useNavigate();
-  const [createCategory, { isLoading }] = useCreateCategoryMutation();
+  const [addCourse, { isLoading }] = useAddCourseMutation();
 
   const handleFileSelect = (file) => {
     if (
@@ -76,7 +85,7 @@ export default function CreateCategory() {
       formData.append("name", category);
       formData.append("thumbnail", selectedImage);
 
-      const res = await createCategory(formData).unwrap();
+      const res = await addCourse(formData).unwrap();
       toast.success(res.message || "Category created successfully");
       
       // Reset form
@@ -98,7 +107,7 @@ export default function CreateCategory() {
       <div className="bg-[#373737] rounded-lg w-full max-w-5xl mx-auto">
         {/* Heading */}
         <div className="p-6 border-b border-gray-700">
-          <h2 className="text-white text-lg font-semibold">Create New Category</h2>
+          <h2 className="text-white text-lg font-semibold">Create a New  Course</h2>
         </div>
 
         {/* Content Section */}
@@ -106,7 +115,7 @@ export default function CreateCategory() {
           {/* Input for Category Name */}
           <div>
             <label className="block text-white text-sm font-medium mb-3">
-              Category Name
+              Course Name
             </label>
             <input
               type="text"

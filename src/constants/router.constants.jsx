@@ -30,6 +30,7 @@ import LiveClass from "../pages/Main/LiveClass/LiveClass";
 import TrainAI from "../pages/Main/TrainAI/TrainAI";
 import DashboardHomeTable from "../Components/DashboardHomeTable";
 import AllLiveClass from "../pages/Main/LiveClass/AllLiveClass";
+import CreateCourse from "../pages/Main/video/CreateCourse";
 
 export const dashboardItems = [
   {
@@ -73,11 +74,15 @@ export const dashboardItems = [
     element: <CreateCategorty />,
   },
   {
+    path: 'video/create-course',
+    element: <CreateCourse/>
+  },
+  {
     path: "video/related-video/:id",
     element: <RelatedVideo />,
     loader: ({ params }) =>
 			fetch(
-				`http://172.252.13.79:3235/api/v1/tutorials/categories/${params.id}`
+				`http://194.59.165.181:8080/api/v1/tutorials/categories/${params.id}`
 			),
   },
   {
@@ -85,7 +90,7 @@ export const dashboardItems = [
     element: <RelatedVideoAdd />,
      loader: ({ params }) =>
 			fetch(
-				`http://172.252.13.79:3235/api/v1/tutorials/videos/${params.id}`
+				`http://194.59.165.181:8080/api/v1/tutorials/videos/${params.id}`
 			),
   },
 

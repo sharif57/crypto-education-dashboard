@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { EllipsisVertical } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useAllCategoriesQuery, useDeleteCategoryMutation, useUpdateCategoryMutation } from "../../../redux/features/tutorialSlice";
+import { useAllCategoriesQuery, useAllCourseQuery, useDeleteCategoryMutation, useUpdateCategoryMutation } from "../../../redux/features/tutorialSlice";
 import Loading from "../../../Components/Loading";
 import toast from "react-hot-toast";
 
@@ -11,7 +11,8 @@ export default function Video() {
 
   const [editModel, setEditModel] = useState(false);
 
-  const {data, isLoading} = useAllCategoriesQuery();
+  // const {data, isLoading} = useAllCategoriesQuery();
+  const {data, isLoading} = useAllCourseQuery();
   console.log(data?.data, "data from video categories");
 
   const [updateCategory] =useUpdateCategoryMutation();
@@ -144,10 +145,15 @@ const [deleteCategory] =useDeleteCategoryMutation();
 
   return (
     <div className="w-full p-6   rounded-lg">
-      <div className="flex justify-end mb-8 items-end">
+      <div className="flex justify-between mb-8 items-end">
         <Link to="/video/create-category">
           <button className="w-64 py-3 bg-[#62C1BF] hover:bg-[#62C1BF]/90 text-black rounded-full mt-4 transition-colors">
             Create New Category
+          </button>
+        </Link>
+        <Link to="/video/create-course">
+          <button className="w-64 py-3 bg-[#62C1BF] hover:bg-[#62C1BF]/90 text-black rounded-full mt-4 transition-colors">
+            Course Add
           </button>
         </Link>
       </div>

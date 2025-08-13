@@ -1,10 +1,13 @@
 import { ArrowLeft, Upload } from "lucide-react";
+import { usePdfUploadMutation } from "../../../redux/features/pdfSlice";
 
 export default function TrainAI() {
   const pdfFiles = [
     { id: 1, name: "name.pdf" },
     { id: 2, name: "name.pdf" },
   ];
+
+  const [pdfUpload]=usePdfUploadMutation()
 
   return (
     <div className=" bg-[#373737]">

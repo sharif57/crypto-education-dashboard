@@ -60,10 +60,27 @@ export const tutorialApi = baseApi.injectEndpoints({
                 body: data,
             }),
             invalidatesTags: ["Video"],
-        })
+        }),
+
+        allCourse: builder.query({
+            query: () => ({
+                url: "/tutorials/courses/",
+                method: "GET",
+            }),
+            providesTags: ["Video"],
+        }),
+        addCourse: builder.mutation({
+            query: (data) => ({
+                url: "/tutorials/courses/",
+                method: "POST",
+                body: data,
+            }),
+            invalidatesTags: ["Video"],
+        }),
+
 
 
     }),
 });
 
-export const { useAllCategoriesQuery, useDeleteCategoryMutation, useCreateCategoryMutation, useSingleCategoryQuery , useCategoryRelatedVideosAddMutation, useRelatedVideoDeleteMutation, useUpdateCategoryMutation} = tutorialApi;
+export const { useAllCategoriesQuery, useDeleteCategoryMutation, useCreateCategoryMutation, useSingleCategoryQuery , useCategoryRelatedVideosAddMutation, useRelatedVideoDeleteMutation, useUpdateCategoryMutation , useAllCourseQuery , useAddCourseMutation} = tutorialApi;
