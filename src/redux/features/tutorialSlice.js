@@ -21,13 +21,15 @@ export const tutorialApi = baseApi.injectEndpoints({
             invalidatesTags: ["Video"],
         }),
         createCategory: builder.mutation({
-            query: (data) => ({
-                url: "/tutorials/categories/",
+            query: ({data, id}) => ({
+                url: `/tutorials/categories/courses/${id}/`,
                 method: "POST",
                 body: data,
             }),
             invalidatesTags: ["Video"],
         }),
+
+
 
         singleCategory: builder.query({
             query: (id) => ({
@@ -57,6 +59,14 @@ export const tutorialApi = baseApi.injectEndpoints({
             }),
             invalidatesTags: ["Video"],
         }),
+        singleVideo: builder.query({
+            query: (id) => ({
+                url: `/tutorials/categories/${id}/`,
+                method: "GET",
+            }),
+            providesTags: ["Video"],
+        }),
+
         relatedVideoDelete: builder.mutation({
             query: (id) => ({
                 url: `/tutorials/videos/${id}/`,
@@ -90,9 +100,26 @@ export const tutorialApi = baseApi.injectEndpoints({
             invalidatesTags: ["Video"],
         }),
 
+             updateCourse: builder.mutation({
+            query: ({data, id}) => ({
+                url: `/tutorials/courses/${id}/`,
+                method: "PATCH",
+                body: data,
+            }),
+            invalidatesTags: ["Video"],
+        }),
+
+        courseDelete: builder.mutation({
+            query: (id) => ({
+                url: `/tutorials/courses/${id}/`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ["Video"],
+        }),
+
 
 
     }),
 });
 
-export const { useAllCategoriesQuery, useDeleteCategoryMutation, useCreateCategoryMutation, useSingleCategoryQuery , useCategoryRelatedVideosAddMutation, useRelatedVideoDeleteMutation, useUpdateCategoryMutation , useAllCourseQuery , useAddCourseMutation} = tutorialApi;
+export const { useAllCategoriesQuery, useDeleteCategoryMutation, useCreateCategoryMutation, useSingleCategoryQuery , useCategoryRelatedVideosAddMutation, useRelatedVideoDeleteMutation, useUpdateCategoryMutation , useAllCourseQuery , useAddCourseMutation , useUpdateCourseMutation , useCourseDeleteMutation , useSingleVideoQuery } = tutorialApi;

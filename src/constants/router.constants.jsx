@@ -31,6 +31,7 @@ import TrainAI from "../pages/Main/TrainAI/TrainAI";
 import DashboardHomeTable from "../Components/DashboardHomeTable";
 import AllLiveClass from "../pages/Main/LiveClass/AllLiveClass";
 import CreateCourse from "../pages/Main/video/CreateCourse";
+import CategoryRelatedVideo from "../pages/Main/video/CategoryRelatedVideo";
 
 export const dashboardItems = [
   {
@@ -92,6 +93,10 @@ export const dashboardItems = [
 			fetch(
 				`http://194.59.165.181:8080/api/v1/tutorials/videos/${params.id}`
 			),
+  },
+  {
+    path: "video/category-related-video",
+    element: <CategoryRelatedVideo />,
   },
 
   {

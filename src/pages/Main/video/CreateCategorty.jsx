@@ -2,10 +2,15 @@
 
 import { useRef, useState } from "react";
 import { useCreateCategoryMutation } from "../../../redux/features/tutorialSlice";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import toast from "react-hot-toast";
 
 export default function CreateCategory() {
+
+   const [searchParams] = useSearchParams();
+  const id = searchParams.get("id");    
+  console.log(id,'query')      // "1" for ?id=1
+
   const [category, setCategory] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
   const [previewImage, setImagePreview] = useState(null);
@@ -75,8 +80,9 @@ export default function CreateCategory() {
       const formData = new FormData();
       formData.append("name", category);
       formData.append("thumbnail", selectedImage);
+      // formData.append("course", id);
 
-      const res = await createCategory(formData).unwrap();
+      const res = await createCategory({data: formData, id}).unwrap();
       toast.success(res.message || "Category created successfully");
       
       // Reset form
