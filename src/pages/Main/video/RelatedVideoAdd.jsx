@@ -1,11 +1,16 @@
 
 import { useRef, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useCategoryRelatedVideosAddMutation } from "../../../redux/features/tutorialSlice";
 import toast from "react-hot-toast";
 
 export default function RelatedVideoAdd() {
-  const { id } = useParams();
+ const { id } = useParams(); // "20"
+
+  // Query param
+  const [searchParams] = useSearchParams();
+  const catId = searchParams.get("catId"); 
+  console.log(catId, 'catId', id , 'id');
   const router = useNavigate()
   const [loading, setLoading] = useState(false);
   const [category, setCategory] = useState('');
@@ -80,7 +85,7 @@ const [categoryRelatedVideosAdd] =useCategoryRelatedVideosAddMutation();
       formData.append('title', title);
       formData.append('duration', duration);
       formData.append('language', selectLanguage);
-      formData.append('course', id);
+      formData.append('course', catId);
       // formData.append('video_file', selectedVideo);
       formData.append('category', id); // Assuming 'id' is the category ID
       if (selectedVideo){

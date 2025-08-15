@@ -80,7 +80,7 @@ export default function CreateCategory() {
       const formData = new FormData();
       formData.append("name", category);
       formData.append("thumbnail", selectedImage);
-      // formData.append("course", id);
+      formData.append("course", id);
 
       const res = await createCategory({data: formData, id}).unwrap();
       toast.success(res.message || "Category created successfully");

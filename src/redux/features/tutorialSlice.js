@@ -117,9 +117,17 @@ export const tutorialApi = baseApi.injectEndpoints({
             invalidatesTags: ["Video"],
         }),
 
+        deleteVideo: builder.mutation({
+            query: (id) => ({
+                url: `/tutorials/videos/${id}/`,
+                method: "DELETE",
+            }),
+            invalidatesTags: ["Video"],
+        }),
+
 
 
     }),
 });
 
-export const { useAllCategoriesQuery, useDeleteCategoryMutation, useCreateCategoryMutation, useSingleCategoryQuery , useCategoryRelatedVideosAddMutation, useRelatedVideoDeleteMutation, useUpdateCategoryMutation , useAllCourseQuery , useAddCourseMutation , useUpdateCourseMutation , useCourseDeleteMutation , useSingleVideoQuery } = tutorialApi;
+export const { useAllCategoriesQuery, useDeleteCategoryMutation, useCreateCategoryMutation, useSingleCategoryQuery , useCategoryRelatedVideosAddMutation, useRelatedVideoDeleteMutation, useUpdateCategoryMutation , useAllCourseQuery , useAddCourseMutation , useUpdateCourseMutation , useCourseDeleteMutation , useSingleVideoQuery, useDeleteVideoMutation } = tutorialApi;

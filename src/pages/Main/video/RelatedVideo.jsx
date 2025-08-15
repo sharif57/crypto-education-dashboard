@@ -156,11 +156,11 @@ export default function RelatedVideo() {
   return (
     <div>
       <div className="flex justify-end mb-8 items-end">
-        <Link to={`/video/related-video-add/${id}`}>
+        {/* <Link to={`/video/related-video-add/${id}`}>
           <button className="w-64 py-3 bg-[#62C1BF] hover:bg-[#62C1BF] text-black rounded-full mt-4 transition-colors">
             Add New Video {id}
           </button>
-        </Link>
+        </Link> */}
 
          <Link to={`/video/create-category?id=${id}`}>
                   <button className="w-64 py-3 bg-[#62C1BF] hover:bg-[#62C1BF]/90 text-black rounded-full mt-4 transition-colors">
@@ -172,7 +172,7 @@ export default function RelatedVideo() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {category.map((video) => (
             <div key={video.id} className="p-4 bg-gray-800 rounded-lg">
-            <Link to={`/video/category-related-video/?id=${video.id}`}>
+            <Link to={`/video/category-related-video/?id=${video.id}/?catId=${id}`}>
                 <img className="w-full h-40 object-cover" src={video.thumbnail} alt="" />
               <div className="mt-2 flex flex-col">
                 <h3 className="text-lg text-white font-medium">{video.name}</h3>
