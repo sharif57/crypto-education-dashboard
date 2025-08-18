@@ -83,7 +83,7 @@ export const dashboardItems = [
     element: <RelatedVideo />,
     loader: ({ params }) =>
 			fetch(
-				`http://194.59.165.181:8080/api/v1/tutorials/categories/${params.id}`
+				`https://api.theclue.io/api/v1/tutorials/categories/${params.id}`
 			),
   },
   {
@@ -91,7 +91,7 @@ export const dashboardItems = [
     element: <RelatedVideoAdd />,
      loader: ({ params }) =>
 			fetch(
-				`http://194.59.165.181:8080/api/v1/tutorials/videos/${params.id}`
+				`https://api.theclue.io/api/v1/tutorials/videos/${params.id}`
 			),
   },
   {
