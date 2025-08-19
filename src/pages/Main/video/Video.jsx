@@ -71,9 +71,7 @@ export default function Video() {
     formData.append("name", nameInput.value || selectedVideo?.name);
     if (imageInput.files[0]) {
       formData.append("thumbnail", imageInput.files[0]);
-    } else {
-      formData.append("thumbnail", selectedVideo?.thumbnail || "");
-    }
+    } 
 
     try {
       const res = await updateCourse({ data: formData, id: selectedVideo.id });

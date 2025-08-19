@@ -98,7 +98,6 @@ export default function RelatedVideo() {
 
   const handleDelete = async (videoId) => {
     try {
-      setLoading(true);
       const res = await deleteCategory(videoId);
       if (res?.data?.status === "success") {
         toast.success(res?.data || "category deleted successfully!");
@@ -106,9 +105,7 @@ export default function RelatedVideo() {
     } catch (error) {
       console.error("Error deleting video:", error);
       toast.error("Failed to delete video. Please try again.");
-    } finally {
-      setLoading(false);
-    }
+    } 
   };
 
   const handleEdit = (video) => {

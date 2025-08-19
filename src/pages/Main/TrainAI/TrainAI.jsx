@@ -125,7 +125,7 @@ export default function TrainAI() {
       </div>
 
       {/* Upload Modal */}
-      {isModalOpen && (
+      {isModalOpen && (           
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-[#373737] rounded-lg p-6 w-full max-w-md">
             <div className="flex justify-between items-center mb-4">
