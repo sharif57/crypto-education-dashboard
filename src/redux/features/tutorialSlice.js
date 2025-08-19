@@ -125,9 +125,18 @@ export const tutorialApi = baseApi.injectEndpoints({
             invalidatesTags: ["Video"],
         }),
 
+        signleVideoUpdate: builder.mutation({
+            query: ({data, id}) => ({
+                url: `/tutorials/videos/${id}/`,
+                method: "PATCH",
+                body: data,
+            }),
+            invalidatesTags: ["Video"],
+        })
+
 
 
     }),
 });
 
-export const { useAllCategoriesQuery, useDeleteCategoryMutation, useCreateCategoryMutation, useSingleCategoryQuery , useCategoryRelatedVideosAddMutation, useRelatedVideoDeleteMutation, useUpdateCategoryMutation , useAllCourseQuery , useAddCourseMutation , useUpdateCourseMutation , useCourseDeleteMutation , useSingleVideoQuery, useDeleteVideoMutation } = tutorialApi;
+export const { useAllCategoriesQuery, useDeleteCategoryMutation, useCreateCategoryMutation, useSingleCategoryQuery , useCategoryRelatedVideosAddMutation, useRelatedVideoDeleteMutation, useUpdateCategoryMutation , useAllCourseQuery , useAddCourseMutation , useUpdateCourseMutation , useCourseDeleteMutation , useSingleVideoQuery, useDeleteVideoMutation, useSignleVideoUpdateMutation } = tutorialApi;
