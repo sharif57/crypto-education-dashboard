@@ -164,7 +164,7 @@ export default function RelatedVideo() {
 
          <Link to={`/video/create-category?id=${id}`}>
                   <button className="w-64 py-3 bg-[#62C1BF] hover:bg-[#62C1BF]/90 text-black rounded-full mt-4 transition-colors">
-                    Create New Category {id}
+                    Create New Category 
                   </button>
                 </Link>
       </div>
@@ -185,7 +185,7 @@ export default function RelatedVideo() {
                   disabled={loading}
                   className="mt-2 px-4 py-2 bg-[#FF0000] text-white rounded hover:bg-red-700"
                 >
-                  {loading ? "Deleting..." : "Delete Video"}
+                  {loading ? "Deleting..." : "Delete Category"}
                 </button>
                 <button
                   onClick={() => handleEdit(video)}

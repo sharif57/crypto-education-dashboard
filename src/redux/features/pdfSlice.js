@@ -10,8 +10,24 @@ export const pdfApi = baseApi.injectEndpoints({
         body: data,
       }),
     }),
+
+    AllPdf: builder.query({
+      query: () => ({
+        url: "/ai/all_global_pdf/",
+        method: "GET",
+      }),
+      providesTags: ["Pdf"],
+    }),
+
+    deletePdf: builder.mutation({
+      query: (id) => ({
+        url: `/ai/delete_global_pdf/${id}/`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Pdf"],
+    }),
    
   }),
 });
 
-export const { usePdfUploadMutation } = pdfApi;
+export const { usePdfUploadMutation , useAllPdfQuery , useDeletePdfMutation} = pdfApi;
