@@ -46,24 +46,24 @@ export const dashboardItems = [
     icon: ShoppingBag,
     element: <DashboardHomeTable />,
   },
-  {
-    name: "Earnings",
-    path: "transaction",
-    icon: BadgePoundSterling,
-    element: <TransactionHome />,
-  },
+  // {
+  //   name: "Earnings",
+  //   path: "transaction",
+  //   icon: BadgePoundSterling,
+  //   element: <TransactionHome />,
+  // },
 
   {
     path: "add-item",
     element: <AddItem />,
   },
 
-  {
-    name: "Subscription",
-    path: "subscription",
-    icon: TbCash,
-    element: <Subscription />,
-  },
+  // {
+  //   name: "Subscription",
+  //   path: "subscription",
+  //   icon: TbCash,
+  //   element: <Subscription />,
+  // },
   {
     name: "Video",
     path: "video",

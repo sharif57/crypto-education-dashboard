@@ -153,11 +153,7 @@ export default function RelatedVideo() {
   return (
     <div>
       <div className="flex justify-end mb-8 items-end">
-        {/* <Link to={`/video/related-video-add/${id}`}>
-          <button className="w-64 py-3 bg-[#62C1BF] hover:bg-[#62C1BF] text-black rounded-full mt-4 transition-colors">
-            Add New Video {id}
-          </button>
-        </Link> */}
+     
 
          <Link to={`/video/create-category?id=${id}`}>
                   <button className="w-64 py-3 bg-[#62C1BF] hover:bg-[#62C1BF]/90 text-black rounded-full mt-4 transition-colors">
@@ -248,6 +244,7 @@ export default function RelatedVideo() {
                   className="border border-gray-300 p-2 rounded w-full"
                 />
               </div>
+              
               <div className="flex justify-end">
                 <button
                   type="submit"
