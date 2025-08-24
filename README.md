@@ -1,8 +1,20 @@
-# React + Vite
+# Project Name
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is built with **React**. Follow the steps below to set up and run it locally.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🚀 Getting Started
+
+### 1. Clone the Repository
+```bash
+
+git clone https://github.com/sharif57/crypto-education-dashboard
+
+cd crypto-education-dashboard
+
+npm install
+
+ Run the Local Machine
+
+npm run dev
