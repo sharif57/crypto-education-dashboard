@@ -15,7 +15,7 @@ export const liveClassApi = baseApi.injectEndpoints({
 
         deleteLiveClass: builder.mutation({
             query: (id) => ({
-                url: `/tutorials/live_classes/${id}/`,
+                url: `/tutorials/live_classes_update/${id}/`,
                 method: "DELETE",
             }),
             invalidatesTags: ["LiveClass"],

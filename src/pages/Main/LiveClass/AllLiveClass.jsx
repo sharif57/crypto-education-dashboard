@@ -1,9 +1,11 @@
 
-import { Edit } from "lucide-react";
+import {  Edit, Trash2 } from "lucide-react";
 import toast from "react-hot-toast";
-import { useLiveClassQuery, useUpdateLiveClassMutation } from "../../../redux/features/liveClassSlice";
+import { useDeleteLiveClassMutation, useLiveClassQuery, useUpdateLiveClassMutation } from "../../../redux/features/liveClassSlice";
 import Loading from "../../../Components/Loading";
 import { useState } from "react";
+import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 export default function AllLiveClass() {
   const [openModal, setOpenModal] = useState(false);
@@ -20,6 +22,7 @@ export default function AllLiveClass() {
   });
 
   const [updateLiveClass] = useUpdateLiveClassMutation();
+  const [deleteLiveClass] =useDeleteLiveClassMutation();
 
   const handleUpdateLiveClass = async (e) => {
     e.preventDefault();
@@ -45,6 +48,44 @@ export default function AllLiveClass() {
     }
   };
 
+  // swal alert add
+ const handleDeleteLiveClass = async (id) => {
+  // Show confirmation dialog
+  const result = await Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!"
+  });
+
+  // If user confirms, proceed with deletion
+  if (result.isConfirmed) {
+    try {
+      const res = await deleteLiveClass(id);
+      if (res.error) {
+        throw new Error(res.error);
+      }
+      // toast.success("Live Class deleted successfully!");
+      Swal.fire({
+        title: "Deleted!",
+        text: "Your file has been deleted.",
+        icon: "success"
+      });
+    } catch (error) {
+      console.log("Error deleting live class:", error);
+      // Optionally show an error message to the user
+      Swal.fire({
+        title: "Error!",
+        text: "Failed to delete the live class.",
+        icon: "error"
+      });
+    }
+  }
+};
+
   // Format date and time for display
   const formatDateTime = (dateString) => {
     return new Date(dateString).toLocaleString("en-US", {
@@ -62,11 +103,11 @@ export default function AllLiveClass() {
       {/* Header */}
       <div className="mb-6 flex justify-between items-center">
         <h1 className="text-white text-2xl font-medium">All Live Classes</h1>
-        {/* <Link to="/live-class/create">
+        <Link to="/live-class/create">
           <button className="w-64 py-3 bg-[#62C1BF] hover:bg-[#62C1BF]/90 text-black rounded-full mt-4 transition-colors">
             Create New Live Class
           </button>
-        </Link> */}
+        </Link>
       </div>
 
       {/* Loading and Error States */}
@@ -107,13 +148,20 @@ export default function AllLiveClass() {
                   <div>{liveClass.description}</div>
                   <div>{formatDateTime(liveClass.date_time)}</div>
                   <div>{liveClass.duration_minutes}</div>
-                  <div className="text-center">
+                  <div className="text-center  space-x-6">
                     <button
                       onClick={() => openModalHandler(liveClass)}
                       className="text-red-400 hover:text-red-500 transition-colors"
                     >
                       <Edit className="w-4 h-4" />
                     </button>
+                    <button
+                      onClick={() => handleDeleteLiveClass(liveClass.id)}
+                      className="text-red-400 hover:text-red-500 transition-colors"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </button>
+
                   </div>
                 </div>
               ))
