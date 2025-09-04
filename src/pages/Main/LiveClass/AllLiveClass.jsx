@@ -36,7 +36,10 @@ export default function AllLiveClass() {
     };
 
     try {
-      const res = await updateLiveClass(updatedData);
+      const res = await updateLiveClass({
+        id: selectedClass.id,
+        data: updatedData,
+      });
       if (res.error) {
         throw new Error(res.error);
       }
@@ -205,7 +208,7 @@ export default function AllLiveClass() {
                       defaultValue={selectedClass.description}
                       placeholder="Description"
                       className="w-full p-2 bg-gray-700 rounded-lg text-white"
-                      required
+                      
                     />
                   </div>
                   <div>

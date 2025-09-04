@@ -9,11 +9,12 @@ export default function LiveClass() {
   const [title, setTitle] = useState("");
   const [link, setLink] = useState("");
   const [duration, setDuration] = useState("");
+  const [dateTime, setDateTime] = useState("");
   const [createLiveClass] =useCreateLiveClassMutation();
 
   const handleSubmit = (e) => {
     try {
-      const res = createLiveClass({ title, link , duration_minutes: duration }).unwrap();
+      const res = createLiveClass({ title, link , duration_minutes: duration , date_time: dateTime}).unwrap();
       console.log("Live class created:", res);
       toast.success("Live class created successfully!");
       router(-1)
@@ -61,6 +62,22 @@ export default function LiveClass() {
               placeholder="Enter duration in minutes"
               value={duration}
               onChange={(e) => setDuration(e.target.value)}
+              className="w-full px-4 py-3 bg-[#373737] border-2 border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+            />
+          </div>
+
+          <div>
+            <label
+              htmlFor="dateTime"
+              className="block text-white text-sm font-medium mb-2"
+            >
+              Date and Time
+            </label>
+            <input
+              id="dateTime"
+              type="datetime-local"
+              value={dateTime}
+              onChange={(e) => setDateTime(e.target.value)}
               className="w-full px-4 py-3 bg-[#373737] border-2 border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
             />
           </div>

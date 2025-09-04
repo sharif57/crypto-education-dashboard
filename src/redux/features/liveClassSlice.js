@@ -30,8 +30,8 @@ export const liveClassApi = baseApi.injectEndpoints({
         }),
 
         updateLiveClass: builder.mutation({
-            query: ( data ) => ({
-                url: `/tutorials/live_classes_update`,
+            query: ( {data, id} ) => ({
+                url: `/tutorials/live_classes_update/${id}/`,
                 method: "PUT",
                 body: data,
             }),
