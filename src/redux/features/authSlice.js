@@ -114,7 +114,7 @@ export const authApi = baseApi.injectEndpoints({
           method: "POST",
           body: data,
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("verify")}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         };
       },
