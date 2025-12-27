@@ -95,7 +95,7 @@ import { Button, message } from "antd";
 import ReactQuill from "react-quill";
 import { useNavigate } from "react-router-dom";
 import "react-quill/dist/quill.snow.css";
-import Quill from "quill";
+import Quill from "quill";        
 import { useState, useEffect } from "react";
 import { FaAngleLeft } from "react-icons/fa6";
 import { usePrivacyPoliciesQuery, useUpdatePrivacyPolicyMutation } from "../../redux/features/privacySlice";
