@@ -1,155 +1,4 @@
 
-
-// import { useState } from "react";
-// import { BsThreeDotsVertical } from "react-icons/bs";
-// import { IoCheckmarkDoneOutline, IoCloseOutline } from "react-icons/io5";
-// import {
-//   useWithdrawalManagerQuery,
-//   useWithdrawApprovedMutation,
-// } from "../redux/features/useSlice";
-// import toast from "react-hot-toast";
-
-// const Withdraw = () => {
-//   const { data, isLoading, refetch } = useWithdrawalManagerQuery();
-//   const [withdrawApproved, { isLoading: isUpdating }] = useWithdrawApprovedMutation();
-
-//   const [openActionMenuId, setOpenActionMenuId] = useState(null);
-
-//   const toggleActionMenu = (id) => {
-//     setOpenActionMenuId((prev) => (prev === id ? null : id));
-//   };
-
-//   const handleStatusChange = async (id, status) => {
-//     try {
-//       await withdrawApproved({ id, status }).unwrap();
-//       toast.success(`Withdrawal ${status === "approved" ? "approved" : "rejected"} successfully!`);
-//       setOpenActionMenuId(null);
-//       await refetch();
-//     } catch (error) {
-//       toast.error(`Failed to ${status === "approved" ? "approve" : "reject"} withdrawal.`);
-//       console.error(error);
-//     }
-//   };
-
-//   // Filter only pending withdrawals
-//   const pendingWithdrawals = data?.data?.filter((item) => item.status === "pending") || [];
-
-//   // Helper function to safely format dates
-//   const formatDate = (dateString) => {
-//     if (!dateString) return "-";
-//     const date = new Date(dateString);
-//     if (isNaN(date.getTime())) return "Invalid Date";
-//     return date.toLocaleString("en-US", {
-//       year: "numeric",
-//       month: "short",
-//       day: "numeric",
-//       hour: "2-digit",
-//       minute: "2-digit",
-//     });
-//   };
-
-//   if (isLoading) {
-//     return <div className="text-center py-10">Loading withdrawals...</div>;
-//   }
-
-//   return (
-//     <div className="customTable overflow-y-auto mb-4 w-full flex flex-col items-center gap-5 mt-10">
-//       <div className="w-full mx-auto">
-//         <div className="customTable w-full rounded-md border overflow-hidden dark:border-slate-700 border-gray-200">
-//           <table className="w-full text-sm">
-//             <thead className="bg-gray-100 dark:bg-slate-900">
-//               <tr>
-//                 <th className="p-3 text-left font-medium dark:text-[#abc2d3] text-gray-700">
-//                   Amount
-//                 </th>
-//                 <th className="p-3 text-left font-medium dark:text-[#abc2d3] text-gray-700">
-//                   Payout Method
-//                 </th>
-//                 <th className="p-3 text-left font-medium dark:text-[#abc2d3] text-gray-700">
-//                   Wallet Address
-//                 </th>
-//                 <th className="p-3 text-left font-medium dark:text-[#abc2d3] text-gray-700">
-//                   Status
-//                 </th>
-//                 <th className="p-3 text-left font-medium dark:text-[#abc2d3] text-gray-700">
-//                   Requested At
-//                 </th>
-//                 <th className="p-3 text-left font-medium dark:text-[#abc2d3] text-gray-700">
-//                   Actions
-//                 </th>
-//               </tr>
-//             </thead>
-//             <tbody>
-//               {pendingWithdrawals.map((item, index) => (
-//                 <tr
-//                   key={item.id}
-//                   className="border-t dark:border-slate-700 dark:hover:bg-slate-900 border-gray-200 hover:bg-gray-50"
-//                 >
-//                   <td className="p-3 dark:text-[#abc2d3] font-semibold">${item.amount}</td>
-//                   <td className="p-3 dark:text-[#abc2d3]">{item.payout_method}</td>
-//                   <td className="p-3 dark:text-[#abc2d3] font-mono text-xs break-all">
-//                     {item.wallet_address}
-//                   </td>
-//                   <td className="p-3">
-//                     <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400">
-//                       {item.status}
-//                     </span>
-//                   </td>
-//                   <td className="p-3 dark:text-[#abc2d3]">
-//                     {formatDate(item.requested_at)}
-//                   </td>
-//                   <td className="p-3 relative">
-//                     <BsThreeDotsVertical
-//                       onClick={() => toggleActionMenu(item.id)}
-//                       className="text-xl cursor-pointer text-gray-600 dark:text-[#abc2d3] hover:text-gray-800 dark:hover:text-white"
-//                     />
-
-//                     {openActionMenuId === item.id && (
-//                       <div
-//                         className={`absolute z-50 right-0 mt-2 w-48 rounded-md shadow-lg bg-white dark:bg-slate-800 ring-1 ring-black ring-opacity-5 ${
-//                           index > pendingWithdrawals.length - 4 ? "bottom-[100%]" : "top-[100%]"
-//                         }`}
-//                       >
-//                         <div className="py-1">
-//                           <button
-//                             onClick={() => handleStatusChange(item.id, "approved")}
-//                             disabled={isUpdating}
-//                             className="w-full text-left px-4 py-2 text-sm flex items-center gap-2 text-green-700 dark:text-green-400 hover:bg-green-50 dark:hover:bg-green-900/30 disabled:opacity-50"
-//                           >
-//                             <IoCheckmarkDoneOutline />
-//                             Approve
-//                           </button>
-//                           <button
-//                             onClick={() => handleStatusChange(item.id, "rejected")}
-//                             disabled={isUpdating}
-//                             className="w-full text-left text-red px-4 py-2 text-sm flex items-center gap-2 text-red-700 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/30 disabled:opacity-50"
-//                           >
-//                             <IoCloseOutline />
-//                             Reject
-//                           </button>
-//                         </div>
-//                       </div>
-//                     )}
-//                   </td>
-//                 </tr>
-//               ))}
-//             </tbody>
-//           </table>
-
-//           {pendingWithdrawals.length === 0 && (
-//             <div className="py-12 text-center">
-//               <p className="text-gray-500 dark:text-gray-400 text-lg">
-//                 No pending withdrawals at the moment.
-//               </p>
-//             </div>
-//           )}
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Withdraw;
 import { useState } from "react";
 import { IoCheckmarkDoneOutline, IoCloseOutline } from "react-icons/io5";
 import {
@@ -160,6 +9,7 @@ import toast from "react-hot-toast";
 
 const Withdraw = () => {
   const { data, isLoading, refetch } = useWithdrawalManagerQuery();
+  console.log(data,'============================')
   const [withdrawApproved, { isLoading: isUpdating }] = useWithdrawApprovedMutation();
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -203,7 +53,7 @@ const Withdraw = () => {
   };
 
   // Filter only pending withdrawals
-  const pendingWithdrawals = data?.data?.filter((item) => item.status === "pending") || [];
+//   const pendingWithdrawals = data?.data?.filter((item) => item.status === "pending") || [];
 
   // Helper function to safely format dates
   const formatDate = (dateString) => {
@@ -252,7 +102,7 @@ const Withdraw = () => {
                 </tr>
               </thead>
               <tbody>
-                {pendingWithdrawals.map((item) => (
+                {data?.data?.map((item) => (
                   <tr
                     key={item.id}
                     className="border-t dark:border-slate-700 dark:hover:bg-slate-900 border-gray-200 hover:bg-gray-50"
@@ -281,7 +131,7 @@ const Withdraw = () => {
               </tbody>
             </table>
 
-            {pendingWithdrawals.length === 0 && (
+            {data?.data?.length === 0 && (
               <div className="py-12 text-center">
                 <p className="text-gray-500 dark:text-gray-400 text-lg">
                   No pending withdrawals at the moment.
