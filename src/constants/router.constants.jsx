@@ -16,7 +16,7 @@ import ForgotPassword from "../pages/Main/Setting/Change-password/ForgotPassword
 import VerifyEmail from "../pages/Main/Setting/Change-password/VerifyEmail";
 import EditTrust from "../pages/Settings/EditTrust";
 import { IoSettingsOutline } from "react-icons/io5";
-import {  Book, ShoppingBag, SmartphoneNfc, VideoIcon } from "lucide-react";
+import {  BadgePoundSterling, Book, ShoppingBag, SmartphoneNfc, VideoIcon } from "lucide-react";
 import AddItem from "../pages/Main/Shop/AddItem";
 
 import Video from "../pages/Main/video/Video";
@@ -29,6 +29,7 @@ import DashboardHomeTable from "../Components/DashboardHomeTable";
 import AllLiveClass from "../pages/Main/LiveClass/AllLiveClass";
 import CreateCourse from "../pages/Main/video/CreateCourse";
 import CategoryRelatedVideo from "../pages/Main/video/CategoryRelatedVideo";
+import Withdraw from "../Components/Withdraw";
 
 export const dashboardItems = [
   {
@@ -43,12 +44,12 @@ export const dashboardItems = [
     icon: ShoppingBag,
     element: <DashboardHomeTable />,
   },
-  // {
-  //   name: "Earnings",
-  //   path: "transaction",
-  //   icon: BadgePoundSterling,
-  //   element: <TransactionHome />,
-  // },
+  {
+    name: "Withdraw History",
+    path: "withdraw",
+    icon: BadgePoundSterling,
+    element: <Withdraw />,
+  },
 
   {
     path: "add-item",

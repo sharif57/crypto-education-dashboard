@@ -35,7 +35,26 @@ export const userApi = baseApi.injectEndpoints({
       invalidatesTags: ["User"],
     }),
 
+    // /referral/withdrawal_manager/
+    withdrawalManager: builder.query({
+      query: () => ({
+        url: "/referral/withdrawal_manager/",
+        method: "GET",
+      }),
+      providesTags: ["User"],
+    }),
+    // /referral/withdrawal_manager/12/
+   // In your API slice (useSlice.js or similar)
+withdrawApproved: builder.mutation({
+  query: ({ id, status }) => ({
+    url: `/referral/withdrawal_manager/${id}/`,
+    method: "PATCH",
+    body: { status },               
+  }),
+  invalidatesTags: ["Withdrawal"], 
+}),
+
   }),
 });
 
-export const {useUserProfileQuery, useUserListQuery, useUpdateProfileMutation, useAddUserMutation} = userApi;
+export const {useUserProfileQuery, useUserListQuery, useUpdateProfileMutation, useAddUserMutation , useWithdrawalManagerQuery , useWithdrawApprovedMutation} = userApi;
