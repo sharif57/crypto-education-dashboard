@@ -144,7 +144,7 @@ export default function RelatedVideoAdd() {
       formData.append("course", catId);
       formData.append("category", id);
       if (selectedVideo) {
-        formData.append("video_file", selectedVideo);
+        formData.append("video_file_url", selectedVideo);
       }
       if (selectedPdf) {
         formData.append("video_resource", selectedPdf);
