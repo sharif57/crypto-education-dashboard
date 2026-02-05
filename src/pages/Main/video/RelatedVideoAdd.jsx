@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { useCategoryRelatedVideosAddMutation } from "../../../redux/features/tutorialSlice";
 import toast from "react-hot-toast";
+import { CirclePlus, Trash2 } from "lucide-react";
 
 export default function RelatedVideoAdd() {
   const { id } = useParams(); // Category ID, e.g., "20"
@@ -14,13 +15,17 @@ export default function RelatedVideoAdd() {
   const [selectedVideo, setSelectedVideo] = useState(null);
   const [previewVideo, setVideoPreview] = useState(null);
   const [isDraggingOverVideo, setIsDraggingVideo] = useState(false);
-  const [selectedPdf, setSelectedPdf] = useState(null);
-  const [isDraggingOverPdf, setIsDraggingPdf] = useState(false);
   const videoFileRefInput = useRef(null);
-  const pdfFileRefInput = useRef(null);
+  const resourceFilesRefInput = useRef(null);
   const [title, setTitle] = useState("");
-  const [duration, setDuration] = useState("");
   const [selectLanguage, setSelectLanguage] = useState("");
+  
+  // Resource Links State
+  const [resourceLinks, setResourceLinks] = useState([""]);
+  
+  // Resource Files State
+  const [resourceFiles, setResourceFiles] = useState([]);
+  const [isDraggingOverFiles, setIsDraggingOverFiles] = useState(false);
 
   const [categoryRelatedVideosAdd] = useCategoryRelatedVideosAddMutation();
 
@@ -38,11 +43,9 @@ export default function RelatedVideoAdd() {
       file &&
       ["video/mp4", "video/webm", "video/avi"].includes(file.type)
     ) {
-     
-
       setSelectedVideo(file);
       const reader = new FileReader();
-      reader.onload = (e) => {
+      reader.onload = () => {
         setVideoPreview(URL.createObjectURL(file));
       };
       reader.readAsDataURL(file);
@@ -51,17 +54,23 @@ export default function RelatedVideoAdd() {
     }
   };
 
-  // Handle PDF, DOCX, DOC file selection
-  const handlePdfFileSelect = (file) => {
+  // Handle Resource Files (PDF, DOCX, PPTX, XLSX) selection
+  const handleResourceFileSelect = (file) => {
     const validTypes = [
       "application/pdf",
       "application/msword",
       "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      "application/vnd.ms-powerpoint",
+      "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+      "application/vnd.ms-excel",
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     ];
+    
     if (file && validTypes.includes(file.type)) {
-      setSelectedPdf(file);
+      setResourceFiles([...resourceFiles, file]);
+      toast.success(`${file.name} added successfully!`);
     } else {
-      alert("Please select a valid file (PDF, DOCX, or DOC).");
+      toast.error("Please select a valid file (PDF, DOCX, PPTX, or XLSX).");
     }
   };
 
@@ -73,11 +82,50 @@ export default function RelatedVideoAdd() {
     }
   };
 
-  const handlePdfInputChange = (e) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      handlePdfFileSelect(file);
+  // Handle file input change for resource files
+  const handleResourceFilesInputChange = (e) => {
+    const files = e.target.files;
+    if (files) {
+      Array.from(files).forEach((file) => {
+        handleResourceFileSelect(file);
+      });
     }
+  };
+
+  // Handle Resource Link change
+  const handleResourceLinkChange = (index, value) => {
+    const updatedLinks = [...resourceLinks];
+    updatedLinks[index] = value;
+    setResourceLinks(updatedLinks);
+  };
+
+  // Add new Resource Link input
+  const handleAddResourceLink = () => {
+    setResourceLinks([...resourceLinks, ""]);
+  };
+
+  // Remove Resource Link input
+  const handleRemoveResourceLink = (index) => {
+    const updatedLinks = resourceLinks.filter((_, i) => i !== index);
+    setResourceLinks(updatedLinks);
+  };
+
+  // Remove Resource File
+  const handleRemoveResourceFile = (index) => {
+    const updatedFiles = resourceFiles.filter((_, i) => i !== index);
+    setResourceFiles(updatedFiles);
+    toast.success("File removed successfully!");
+  };
+
+  // Clear All Resource Files
+  const handleClearAllResourceFiles = () => {
+    setResourceFiles([]);
+    toast.success("All files cleared!");
+  };
+
+  // Trigger file input click for resource files
+  const handleResourceFilesSelection = () => {
+    resourceFilesRefInput.current?.click();
   };
 
   const handleVideoDraggingOver = (e) => {
@@ -99,33 +147,9 @@ export default function RelatedVideoAdd() {
     }
   };
 
-  const handlePdfDraggingOver = (e) => {
-    e.preventDefault();
-    setIsDraggingPdf(true);
-  };
-
-  const handlePdfDraggingLeave = (e) => {
-    e.preventDefault();
-    setIsDraggingPdf(false);
-  };
-
-  const handlePdfDropping = (e) => {
-    e.preventDefault();
-    setIsDraggingPdf(false);
-    const file = e.dataTransfer.files[0];
-    if (file) {
-      handlePdfFileSelect(file);
-    }
-  };
-
   // Trigger file input click for video
   const handleVideoFileSelection = () => {
     videoFileRefInput.current?.click();
-  };
-
-  // Trigger file input click for PDF/DOCX/DOC
-  const handlePdfFileSelection = () => {
-    pdfFileRefInput.current?.click();
   };
 
   // Handle form submission
@@ -139,19 +163,27 @@ export default function RelatedVideoAdd() {
     try {
       const formData = new FormData();
       formData.append("title", title);
-      formData.append("duration_seconds", duration);
       formData.append("language", selectLanguage);
       formData.append("course", catId);
       formData.append("category", id);
+      
       if (selectedVideo) {
         formData.append("video_file_url", selectedVideo);
       }
-      if (selectedPdf) {
-        formData.append("video_resource", selectedPdf);
-      }
+
+      // Append Resource Links (non-empty values only)
+      const validLinks = resourceLinks.filter(link => link.trim());
+      validLinks.forEach((link) => {
+        formData.append("resource_links", link);
+      });
+
+      // Append Resource Files
+      resourceFiles.forEach((file) => {
+        formData.append("resource_files", file);
+      });
 
       const res = await categoryRelatedVideosAdd({ data: formData });
-      toast.success("Video and resource saved successfully!" || res?.message);
+      toast.success("Video and resources saved successfully!" || res?.message);
       navigate(-1); // Navigate back
 
     } catch (error) {
@@ -161,6 +193,11 @@ export default function RelatedVideoAdd() {
       setLoading(false);
     }
   };
+
+//   resource_files['', '', '',]
+ 
+// resource_links['', '', '']
+ 
 
   return (
     <div className="flex items-center justify-center p-4">
@@ -186,18 +223,73 @@ export default function RelatedVideoAdd() {
             />
           </div>
 
-          {/* Input for Video Duration */}
+          {/* Input for Resource Links */}
           <div>
             <label className="block text-white text-sm font-medium mb-3">
-              Video Duration
+              Resource Links
             </label>
-            <input
-              type="text"
-              value={duration}
-              onChange={(e) => setDuration(e.target.value)}
-              placeholder="Enter video duration (e.g., 120 for 120 seconds)"
-              className="w-full px-4 py-3 bg-[#373737] border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
-            />
+            <div className="space-y-3">
+              {resourceLinks.map((link, index) => (
+                <div key={index} className="flex items-center gap-2">
+                  <input
+                    type="url"
+                    value={link}
+                    onChange={(e) => handleResourceLinkChange(index, e.target.value)}
+                    placeholder="Enter resource link (optional)"
+                    className="flex-1 px-4 py-3 bg-[#373737] border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
+                  />
+                  {resourceLinks.length > 1 && (
+                    <button
+                      onClick={() => handleRemoveResourceLink(index)}
+                      className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
+                      title="Remove this link"
+                    >
+                      <Trash2 className="text-red-500" size={20} />
+                    </button>
+                  )}
+                </div>
+              ))}
+              <button
+                onClick={handleAddResourceLink}
+                className="flex items-center gap-2 px-4 py-2 bg-teal-500 hover:bg-teal-600 text-white rounded-lg text-sm transition-colors"
+              >
+                <CirclePlus size={18} />
+                Add Resource Link
+              </button>
+            </div>
+
+            {/* Display Resource Links in List Format */}
+            {resourceLinks.filter(link => link.trim()).length > 0 && (
+              <div className="mt-4 p-4 bg-gray-800 rounded-lg">
+                <div className="text-white text-sm font-medium mb-3">
+                  📋 Resource Links List ({resourceLinks.filter(link => link.trim()).length})
+                </div>
+                <div className="space-y-2">
+                  {resourceLinks
+                    .map((link, index) => ({ link, index }))
+                    .filter(({ link }) => link.trim())
+                    .map(({ link, index }) => (
+                      <div
+                        key={index}
+                        className="flex items-start gap-3 p-2 bg-gray-700 rounded hover:bg-gray-600 transition-colors"
+                      >
+                        <span className="text-teal-400 text-sm font-bold">
+                          {index + 1}.
+                        </span>
+                        <a
+                          href={link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-teal-300 hover:text-teal-200 text-sm truncate flex-1 hover:underline"
+                          title={link}
+                        >
+                          {link}
+                        </a>
+                      </div>
+                    ))}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Select Language */}
@@ -279,27 +371,110 @@ export default function RelatedVideoAdd() {
             </div>
           </div>
 
-          {/* Area for PDF/DOCX/DOC Upload */}
+          {/* Area for Resource Files Upload */}
           <div>
+            <label className="block text-white text-sm font-medium mb-3">
+              Resource Files
+            </label>
             <div
               className={`relative border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
-                isDraggingOverPdf
+                isDraggingOverFiles
                   ? "border-teal-400 bg-teal-400/10"
                   : "border-gray-600 hover:border-gray-500"
               }`}
-              onDragOver={handlePdfDraggingOver}
-              onDragLeave={handlePdfDraggingLeave}
-              onDrop={handlePdfDropping}
+              onDragOver={(e) => {
+                e.preventDefault();
+                setIsDraggingOverFiles(true);
+              }}
+              onDragLeave={(e) => {
+                e.preventDefault();
+                setIsDraggingOverFiles(false);
+              }}
+              onDrop={(e) => {
+                e.preventDefault();
+                setIsDraggingOverFiles(false);
+                const files = e.dataTransfer.files;
+                if (files) {
+                  Array.from(files).forEach((file) => {
+                    handleResourceFileSelect(file);
+                  });
+                }
+              }}
             >
-              {selectedPdf ? (
+              {resourceFiles.length > 0 ? (
                 <div className="space-y-4">
-                  <div className="text-white text-sm">{selectedPdf.name}</div>
-                  <button
-                    onClick={handlePdfFileSelection}
-                    className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg text-sm transition-colors"
-                  >
-                    Change File
-                  </button>
+                  <div className="text-white text-sm font-medium mb-4">
+                    {resourceFiles.length} file(s) selected
+                  </div>
+                  <div className="space-y-2 max-h-48 overflow-y-auto">
+                    {resourceFiles.map((file, index) => (
+                      <div
+                        key={index}
+                        className="flex items-center justify-between bg-gray-800 p-3 rounded-lg"
+                      >
+                        <div className="flex items-center gap-2">
+                          <span className="text-gray-400 text-sm">📄</span>
+                          <div className="flex-1">
+                            <span className="text-white text-sm truncate block">
+                              {file.name}
+                            </span>
+                            <span className="text-gray-400 text-xs">
+                              {(file.size / 1024).toFixed(2)} KB
+                            </span>
+                          </div>
+                        </div>
+                        <button
+                          onClick={() => handleRemoveResourceFile(index)}
+                          className="p-1 hover:bg-gray-700 rounded transition-colors"
+                          title="Remove this file"
+                        >
+                          <Trash2 className="text-red-500" size={18} />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={handleResourceFilesSelection}
+                      className="flex-1 px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-lg text-sm transition-colors"
+                    >
+                      Add More Files
+                    </button>
+                    <button
+                      onClick={handleClearAllResourceFiles}
+                      className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg text-sm transition-colors"
+                      title="Clear all files"
+                    >
+                      Clear All
+                    </button>
+                  </div>
+
+                  {/* Display Resource Files in List Format */}
+                  <div className="mt-4 p-4 bg-gray-800 rounded-lg">
+                    <div className="text-white text-sm font-medium mb-3">
+                      📁 Files to Upload ({resourceFiles.length})
+                    </div>
+                    <div className="space-y-2">
+                      {resourceFiles.map((file, index) => (
+                        <div
+                          key={index}
+                          className="flex items-center gap-3 p-2 bg-gray-700 rounded hover:bg-gray-600 transition-colors"
+                        >
+                          <span className="text-teal-400 text-sm font-bold min-w-fit">
+                            {index + 1}.
+                          </span>
+                          <div className="flex-1 min-w-0">
+                            <div className="text-white text-sm truncate">
+                              {file.name}
+                            </div>
+                            <div className="text-gray-400 text-xs">
+                              {(file.size / 1024).toFixed(2)} KB • {file.type.split('/')[1]?.toUpperCase() || 'FILE'}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 </div>
               ) : (
                 <div className="space-y-4">
@@ -319,17 +494,17 @@ export default function RelatedVideoAdd() {
                   </div>
                   <div>
                     <div className="text-white text-lg font-medium mb-2">
-                      Upload Resource
+                      Upload Resource Files
                     </div>
                     <button
-                      onClick={handlePdfFileSelection}
+                      onClick={handleResourceFilesSelection}
                       className="px-6 py-2 bg-white text-black hover:bg-gray-600 hover:text-white rounded-lg text-sm transition-colors"
                     >
-                      Select File
+                      Select Files
                     </button>
                   </div>
                   <div className="text-gray-400 text-xs">
-                    Supported formats: PDF, DOCX, DOC
+                    Supported formats: PDF, DOCX, PPTX, XLSX (optional)
                   </div>
                 </div>
               )}
@@ -357,10 +532,11 @@ export default function RelatedVideoAdd() {
           className="hidden"
         />
         <input
-          ref={pdfFileRefInput}
+          ref={resourceFilesRefInput}
           type="file"
-          accept=".pdf,.docx,.doc,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-          onChange={handlePdfInputChange}
+          multiple
+          accept=".pdf,.docx,.doc,.pptx,.xlsx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.ms-powerpoint,application/vnd.openxmlformats-officedocument.presentationml.presentation,application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+          onChange={handleResourceFilesInputChange}
           className="hidden"
         />
       </div>

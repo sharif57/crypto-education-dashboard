@@ -54,7 +54,16 @@ withdrawApproved: builder.mutation({
   invalidatesTags: ["Withdrawal"], 
 }),
 
+updateUserSubscription: builder.mutation({
+        query: ({ id, ...data  }) => ({
+          url: `/auth/user_details/${data.userId}/`,  
+          method: "PATCH",        
+          body: data,  
+        }),
+        invalidatesTags: ["Users"],
+    }),
+
   }),
 });
 
-export const {useUserProfileQuery, useUserListQuery, useUpdateProfileMutation, useAddUserMutation , useWithdrawalManagerQuery , useWithdrawApprovedMutation} = userApi;
+export const {useUserProfileQuery, useUserListQuery, useUpdateProfileMutation, useAddUserMutation , useWithdrawalManagerQuery , useWithdrawApprovedMutation, useUpdateUserSubscriptionMutation} = userApi;
