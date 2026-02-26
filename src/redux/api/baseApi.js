@@ -22,6 +22,7 @@ export const baseApi = createApi({
     'LiveClass',
     'Video',
     "Privacy",
+    'Resource',
   ], // Added all necessary tags
   endpoints: () => ({}),
 });

@@ -30,6 +30,7 @@ import AllLiveClass from "../pages/Main/LiveClass/AllLiveClass";
 import CreateCourse from "../pages/Main/video/CreateCourse";
 import CategoryRelatedVideo from "../pages/Main/video/CategoryRelatedVideo";
 import Withdraw from "../Components/Withdraw";
+import Resources from "../pages/Main/Resources/Resources";
 
 export const dashboardItems = [
   {
@@ -107,6 +108,12 @@ export const dashboardItems = [
   {
     path: "live-class/create",
     element: <LiveClass />,
+  },
+  {
+    name: 'Important Resources',
+    path: "important-resources",
+    icon: MdOutlineSecurityUpdateWarning,
+    element: <Resources />,
   },
   {
     name: "Train AI",
