@@ -42,7 +42,27 @@ export const privacyApi = baseApi.injectEndpoints({
       invalidatesTags: ["Privacy"],
     }),
 
+    aboutUs: builder.query({
+      query: () => ({
+        url: "/settings/about_us/",
+        method: "GET",
+      }),
+      providesTags: ["Privacy"],
+    }),
+
+        updateAboutUs: builder.mutation({
+      query: (data) => ({
+        url: "/settings/about_us/",
+        method: "PUT",
+        body: data,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+      invalidatesTags: ["Privacy"],
+    }),
+
   }),
 });
 
-export const {usePrivacyPoliciesQuery, useUpdatePrivacyPolicyMutation, useTermsQuery, useUpdateTermsMutation} = privacyApi;
+export const {usePrivacyPoliciesQuery, useUpdatePrivacyPolicyMutation, useTermsQuery, useUpdateTermsMutation, useAboutUsQuery , useUpdateAboutUsMutation } = privacyApi;

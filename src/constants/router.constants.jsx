@@ -14,7 +14,6 @@ import Setting from "../pages/Main/Setting/Setting";
 import ChangePassword from "../pages/Main/Setting/Change-password/ChangePassword";
 import ForgotPassword from "../pages/Main/Setting/Change-password/ForgotPassword";
 import VerifyEmail from "../pages/Main/Setting/Change-password/VerifyEmail";
-import EditTrust from "../pages/Settings/EditTrust";
 import { IoSettingsOutline } from "react-icons/io5";
 import {  BadgePoundSterling, Book, ShoppingBag, SmartphoneNfc, VideoIcon } from "lucide-react";
 import AddItem from "../pages/Main/Shop/AddItem";
@@ -31,6 +30,8 @@ import CreateCourse from "../pages/Main/video/CreateCourse";
 import CategoryRelatedVideo from "../pages/Main/video/CategoryRelatedVideo";
 import Withdraw from "../Components/Withdraw";
 import Resources from "../pages/Main/Resources/Resources";
+import AboutUs from "../pages/Settings/AboutUs";
+import EditAboutUs from "../pages/Settings/EditAboutUs";
 
 export const dashboardItems = [
   {
@@ -178,15 +179,15 @@ export const dashboardItems = [
         path: "settings/privacy-policy/edit",
         element: <EditPrivacyPolicy />,
       },
-      // {
-      //   name: "Trust & Safety",
-      //   icon: BiMessageSquareDetail,
-      //   path: "settings/trust-safety",
-      //   element: <Trust />,
-      // },
       {
-        path: "settings/trust-safety/edit",
-        element: <EditTrust />,
+        name: "About Us",
+        icon: MdOutlineSecurityUpdateWarning,
+        path: "settings/about-us",
+        element: <AboutUs />,
+      },
+      {
+        path: "settings/about-us/edit",
+        element: <EditAboutUs />,
       },
     ],
   },
