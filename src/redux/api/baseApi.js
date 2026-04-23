@@ -23,6 +23,7 @@ export const baseApi = createApi({
     'Video',
     "Privacy",
     'Resource',
+    'Issue',
   ], // Added all necessary tags
   endpoints: () => ({}),
 });

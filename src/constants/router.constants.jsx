@@ -8,7 +8,7 @@ import EditTermsConditions from "../pages/Settings/EditTermsConditions";
 import PrivacyPolicy from "../pages/Settings/PrivacyPolicy";
 import EditPrivacyPolicy from "../pages/Settings/EditPrivacyPolicy";
 
-import { MdOutlineSecurityUpdateWarning } from "react-icons/md";
+import { MdOutlineSecurityUpdateWarning, MdReport } from "react-icons/md";
 import { FaServicestack } from "react-icons/fa6";
 import Setting from "../pages/Main/Setting/Setting";
 import ChangePassword from "../pages/Main/Setting/Change-password/ChangePassword";
@@ -32,6 +32,7 @@ import Withdraw from "../Components/Withdraw";
 import Resources from "../pages/Main/Resources/Resources";
 import AboutUs from "../pages/Settings/AboutUs";
 import EditAboutUs from "../pages/Settings/EditAboutUs";
+import Issues from "../pages/Main/Issues";
 
 export const dashboardItems = [
   {
@@ -122,13 +123,19 @@ export const dashboardItems = [
     icon: Book,
     element: <TrainAI />,
   },
-
+  {
+    name: "Issues",
+    path: "issues",
+    icon: MdReport,
+    element: <Issues />,
+  },
   {
     name: "Setting",
     path: "settings",
     icon: IoSettingsOutline,
     element: <Setting />,
   },
+
 
   {
     name: "Settings",
