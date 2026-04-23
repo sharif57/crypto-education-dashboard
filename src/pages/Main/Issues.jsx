@@ -112,14 +112,14 @@ export default function Issues() {
         </div>
       ),
     },
-    {
-      title: "Description",
-      dataIndex: "description",
-      key: "description",
-      render: (description) => (
-        <div className="max-w-[320px] text-sm text-slate-700 line-clamp-2">{description || "N/A"}</div>
-      ),
-    },
+    // {
+    //   title: "Description",
+    //   dataIndex: "description",
+    //   key: "description",
+    //   render: (description) => (
+    //     <div className="max-w-[320px] text-sm text-slate-700 line-clamp-2">{description || "N/A"}</div>
+    //   ),
+    // },
     {
       title: "Status",
       dataIndex: "status",
