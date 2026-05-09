@@ -4,7 +4,7 @@ import { Link, useSearchParams } from "react-router-dom";
 import { useDeleteVideoMutation, useSignleVideoUpdateMutation, useSingleVideoQuery } from "../../../redux/features/tutorialSlice";
 import Loading from "../../../Components/Loading";
 import toast from "react-hot-toast";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function CategoryRelatedVideo() {
   const [searchParams] = useSearchParams();
@@ -17,6 +17,19 @@ export default function CategoryRelatedVideo() {
   const [title, setTitle] = useState("");
   const [duration, setDuration] = useState("");
   const [selectedPdf, setSelectedPdf] = useState(null);
+  const [selectedVideoFile, setSelectedVideoFile] = useState(null);
+  const [previewVideoUrl, setPreviewVideoUrl] = useState("");
+
+  useEffect(() => {
+    if (!selectedVideoFile) return undefined;
+
+    const objectUrl = URL.createObjectURL(selectedVideoFile);
+    setPreviewVideoUrl(objectUrl);
+
+    return () => {
+      URL.revokeObjectURL(objectUrl);
+    };
+  }, [selectedVideoFile]);
 
   if (isLoading) {
     return <div><Loading /></div>;
@@ -44,7 +57,24 @@ export default function CategoryRelatedVideo() {
     setTitle(video.title);
     setDuration(video.duration_seconds || "");
     setSelectedPdf(null); // Reset PDF on edit
+    setSelectedVideoFile(null);
+    setPreviewVideoUrl(video.video_file || "");
     setOpenModal(true);
+  };
+
+  const handleVideoFileChange = (e) => {
+    const file = e.target.files?.[0];
+
+    if (!file) {
+      return;
+    }
+
+    if (!file.type.startsWith("video/")) {
+      toast.error("Please upload a valid video file.");
+      return;
+    }
+
+    setSelectedVideoFile(file);
   };
 
   const handleUpdate = async () => {
@@ -73,6 +103,10 @@ export default function CategoryRelatedVideo() {
       formData.append("video_resource", selectedPdf);
     }
 
+    if (selectedVideoFile) {
+      formData.append("video_file_url", selectedVideoFile);
+    }
+
     try {
       const res = await signleVideoUpdate({
         id: selectedVideo.object_id,
@@ -82,6 +116,8 @@ export default function CategoryRelatedVideo() {
       setOpenModal(false);
       setSelectedVideo(null);
       setSelectedPdf(null); // Reset PDF after success
+      setSelectedVideoFile(null);
+      setPreviewVideoUrl("");
     } catch (err) {
       toast.error(err?.data?.message || "Failed to update video. Please try again.");
       console.error("Update error:", err);
@@ -94,6 +130,8 @@ export default function CategoryRelatedVideo() {
     setTitle("");
     setDuration("");
     setSelectedPdf(null); // Reset PDF on cancel
+    setSelectedVideoFile(null);
+    setPreviewVideoUrl("");
   };
 
   return (
@@ -170,6 +208,30 @@ export default function CategoryRelatedVideo() {
               />
               {selectedPdf && <p className="text-sm text-gray-500 mt-1">{selectedPdf.name}</p>}
             </div>
+            <div className="mb-4">
+              <label className="block text-sm font-medium text-gray-700">Video File</label>
+              <input
+                type="file"
+                accept="video/*"
+                onChange={handleVideoFileChange}
+                className="mt-1 p-2 w-full border rounded-md"
+              />
+              {selectedVideoFile && (
+                <p className="text-sm text-gray-500 mt-1">{selectedVideoFile.name}</p>
+              )}
+            </div>
+            {(previewVideoUrl || selectedVideo?.video_file) && (
+              <div className="mb-4">
+                <p className="text-sm font-medium text-gray-700 mb-2">Video Preview</p>
+                <video
+                  controls
+                  className="w-full h-44 rounded-md bg-black"
+                  src={previewVideoUrl || selectedVideo?.video_file}
+                >
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            )}
             <div className="flex justify-end gap-2">
               <button
                 onClick={handleCancel}
