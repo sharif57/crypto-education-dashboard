@@ -19,6 +19,11 @@ export default function RelatedVideoAdd() {
   const resourceFilesRefInput = useRef(null);
   const [title, setTitle] = useState("");
   const [selectLanguage, setSelectLanguage] = useState("");
+  const [errors, setErrors] = useState({
+    title: false,
+    language: false,
+    video: false,
+  });
   
   // Resource Links State
   const [resourceLinks, setResourceLinks] = useState([""]);
@@ -44,6 +49,7 @@ export default function RelatedVideoAdd() {
       ["video/mp4", "video/webm", "video/avi"].includes(file.type)
     ) {
       setSelectedVideo(file);
+      setErrors((prev) => ({ ...prev, video: false }));
       const reader = new FileReader();
       reader.onload = () => {
         setVideoPreview(URL.createObjectURL(file));
@@ -154,8 +160,16 @@ export default function RelatedVideoAdd() {
 
   // Handle form submission
   const handleSaving = async () => {
-    if (!title || !selectedVideo) {
-      toast.error("Please provide a title and select a video.");
+    const validationErrors = {
+      title: !title.trim(),
+      language: !selectLanguage,
+      video: !selectedVideo,
+    };
+
+    setErrors(validationErrors);
+
+    if (validationErrors.title || validationErrors.language || validationErrors.video) {
+      toast.error("Please fill all required fields.");
       return;
     }
 
@@ -217,10 +231,18 @@ export default function RelatedVideoAdd() {
             <input
               type="text"
               value={title}
-              onChange={(e) => setTitle(e.target.value)}
+                onChange={(e) => {
+                  setTitle(e.target.value);
+                  if (e.target.value.trim()) {
+                    setErrors((prev) => ({ ...prev, title: false }));
+                  }
+                }}
               placeholder="Enter video title"
               className="w-full px-4 py-3 bg-[#373737] border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
             />
+            {errors.title && (
+              <p className="mt-2 text-sm text-red-400">This field is required</p>
+            )}
           </div>
 
           {/* Input for Resource Links */}
@@ -299,7 +321,12 @@ export default function RelatedVideoAdd() {
             </label>
             <select
               value={selectLanguage}
-              onChange={(e) => setSelectLanguage(e.target.value)}
+                onChange={(e) => {
+                  setSelectLanguage(e.target.value);
+                  if (e.target.value) {
+                    setErrors((prev) => ({ ...prev, language: false }));
+                  }
+                }}
               className="w-full px-4 py-3 bg-[#373737] border cursor-pointer border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-teal-500 focus:border-transparent"
             >
               <option value="">Select Language</option>
@@ -307,6 +334,9 @@ export default function RelatedVideoAdd() {
               <option value="2">German</option>
               {/* Add more languages as needed */}
             </select>
+            {errors.language && (
+              <p className="mt-2 text-sm text-red-400">This field is required</p>
+            )}
           </div>
 
           {/* Area for Video Upload */}
@@ -369,6 +399,9 @@ export default function RelatedVideoAdd() {
                 </div>
               )}
             </div>
+            {errors.video && (
+              <p className="mt-2 text-sm text-red-400">This field is required</p>
+            )}
           </div>
 
           {/* Area for Resource Files Upload */}
@@ -516,7 +549,7 @@ export default function RelatedVideoAdd() {
         <div className="p-6 border-t border-gray-700">
           <button
             onClick={handleSaving}
-            disabled={loading || !title || !selectedVideo}
+            disabled={loading}
             className="w-full py-3 bg-teal-500 hover:bg-teal-600 disabled:bg-gray-600 disabled:cursor-not-allowed text-white rounded-lg font-medium transition-colors"
           >
             {loading ? "Saving..." : "Save Video"}

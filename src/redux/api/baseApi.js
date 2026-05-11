@@ -4,7 +4,7 @@ export const baseApi = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://api.theclue.io/api/v1',
-    // baseUrl: 'http://10.10.12.49:8009/api/v1',
+    // baseUrl: 'http://10.10.12.15:8000/api/v1',
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("accessToken");
 

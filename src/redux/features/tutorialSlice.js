@@ -132,11 +132,21 @@ export const tutorialApi = baseApi.injectEndpoints({
                 body: data,
             }),
             invalidatesTags: ["Video"],
-        })
+        }),
+
+        // /tutorials/videos/e5cdc17c-fe8e-45aa-bcf9-8200baaec090/reorder/
+        positionUpdate: builder.mutation({
+            query: ({data, id}) => ({
+                url: `/tutorials/videos/${id}/reorder/`,
+                method: "PATCH",
+                body: data,
+            }),
+            invalidatesTags: ["Video"],
+        }),
 
 
 
     }),
 });
 
-export const { useAllCategoriesQuery, useDeleteCategoryMutation, useCreateCategoryMutation, useSingleCategoryQuery , useCategoryRelatedVideosAddMutation, useRelatedVideoDeleteMutation, useUpdateCategoryMutation , useAllCourseQuery , useAddCourseMutation , useUpdateCourseMutation , useCourseDeleteMutation , useSingleVideoQuery, useDeleteVideoMutation, useSignleVideoUpdateMutation } = tutorialApi;
+export const { useAllCategoriesQuery, useDeleteCategoryMutation, useCreateCategoryMutation, useSingleCategoryQuery , useCategoryRelatedVideosAddMutation, useRelatedVideoDeleteMutation, useUpdateCategoryMutation , useAllCourseQuery , useAddCourseMutation , useUpdateCourseMutation , useCourseDeleteMutation , useSingleVideoQuery, useDeleteVideoMutation, useSignleVideoUpdateMutation, usePositionUpdateMutation } = tutorialApi;
